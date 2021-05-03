@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f8d6e0b00e979846ae3e6de9a33088e, type: 3}
+  m_Name: Grass Land
+  m_EditorClassIdentifier: 
+  nosieOffset: 1234
+  nosieScale: 0.042
+  terrainHeight: 22
+  terrainScale: 0.15
+  surfaceBlock: 3
+  subSurfaceBlock: 8
+  majorFloraIndex: 0
+  majorFloraZoneScale: 1.3
+  majorFloraZoneThreshold: 0.6
+  majorFloraPlacementScale: 15
+  majorFloraPlacementThreshold: 0.8
+  placeMajorFlora: 0
+  height: {x: 0, y: 0}
+  deposits:
+  - {fileID: 11400000, guid: 96073c14b72d1e34fb475631a580cdc7, type: 2}
+  - {fileID: 11400000, guid: 8d82422cca6de9940b3f23737d273162, type: 2}
+  - {fileID: 11400000, guid: fb54c33a81004c04f98f2e2be724a394, type: 2}
