@@ -63,7 +63,7 @@ public class UIItemSlot : MonoBehaviour {
 }
 
 public class ItemSlot {
-	public Item item = null;
+	public ItemData item = null;
 	private UIItemSlot uiItemSlot = null;
 
 	public bool isCreative;
@@ -74,7 +74,7 @@ public class ItemSlot {
 		uiItemSlot.Link( this );
 	}
 
-	public ItemSlot( UIItemSlot _uiItemSlot, Item _item ) {
+	public ItemSlot( UIItemSlot _uiItemSlot, ItemData _item ) {
 		item = _item;
 		uiItemSlot = _uiItemSlot;
 		uiItemSlot.Link( this );
@@ -109,13 +109,13 @@ public class ItemSlot {
 		}
 	}
 
-	public Item TakeAll() {
-		Item handOver = new Item( item.id, item.amount );
+	public ItemData TakeAll() {
+		ItemData handOver = new ItemData( item.id, item.amount );
 		EmptySlot();
 		return handOver;
 	}
 
-	public void InsertStack( Item _item ) {
+	public void InsertStack( ItemData _item ) {
 		item = _item;
 		uiItemSlot.UpdateSlot();
 	}

@@ -11,7 +11,7 @@ public class ToolBar : MonoBehaviour {
 	private void Start() {
 		byte index = 1;
 		foreach ( UIItemSlot s in slots ) {
-			Item item = new Item( index, Random.Range( 2, 65 ) );
+			ItemData item = new ItemData( index, Random.Range( 2, 65 ) );
 			ItemSlot slot = new ItemSlot( s, item );
 			index++;
 		}

@@ -7,6 +7,9 @@ public class Inventory : MonoBehaviour {
 
 	// Start is called before the first frame update
 	private void Start() {
+		foreach ( UIItemSlot s in slots ) {
+			s.UpdateSlot();
+		}
 	}
 
 	// Update is called once per frame

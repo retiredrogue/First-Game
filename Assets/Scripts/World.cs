@@ -93,7 +93,6 @@ public class World : MonoBehaviour {
 
 	public void DayNightCycle() {
 		GameTime.Tick();
-		Debug.Log( GameTime.hours + ":" + GameTime.minutes );
 		if ( GameTime.ticksPassed >= 16200 && GameTime.ticksPassed <= 66600 && globalLightLevel <= .9 )
 			globalLightLevel += .0005f;
 		if ( GameTime.ticksPassed >= 66600 && globalLightLevel >= .05 )
@@ -274,7 +273,7 @@ public class VoxelMod {
 [System.Serializable]
 public class GameAssetsData {
 	public BlockTypeData[] blockTypes;
-	public Item[] items;
+	public ItemData[] items;
 	public Biome[] biomes;
 	public Material[] materials;
 	public int seed;
