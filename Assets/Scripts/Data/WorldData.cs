@@ -17,17 +17,17 @@ public class WorldData {
 
 	public static int textureAtlasSizeInBlocks = 16;
 
-	public static int worldSizeInVoxels {
+	public static int WorldSizeInVoxels {
 		get { return worldSizeInChunks * chunkWidth; }
 	}
 
-	public static float normalizedBlockTextureSize {
+	public static float NormalizedBlockTextureSize {
 		get { return 1f / ( float )textureAtlasSizeInBlocks; }
 	}
 
 	public static Vector2 lightLevel = new Vector2( 0.1f, 0.9f );
 
-	public static float unitOfLight {
+	public static float UnitOfLight {
 		get { return .0625f; }
 	}
 
@@ -85,7 +85,7 @@ public class WorldData {
 		chunks[ coord ].PopulateVoxelMapData();
 	}
 
-	public bool IsVoxelInWorld( Vector3 pos ) => ( pos.x >= 0 && pos.x < worldSizeInVoxels && pos.y >= 0 && pos.y < chunkHeight && pos.z >= 0 && pos.z < worldSizeInVoxels ) ? true : false;
+	public bool IsVoxelInWorld( Vector3 pos ) => ( pos.x >= 0 && pos.x < WorldSizeInVoxels && pos.y >= 0 && pos.y < chunkHeight && pos.z >= 0 && pos.z < WorldSizeInVoxels );
 
 	public VoxelData GetVoxelData( Vector3 voxelgPosition ) {
 		if ( !IsVoxelInWorld( voxelgPosition ) )
@@ -127,7 +127,7 @@ public class WorldData {
 		return c;
 	}
 
-	public bool IsChunkInWorld( ChunkCoord coord ) => ( coord.x >= 0 && coord.x < worldSizeInChunks - 1 && coord.z >= 0 && coord.z < worldSizeInChunks - 1 ) ? true : false;
+	public bool IsChunkInWorld( ChunkCoord coord ) => ( coord.x >= 0 && coord.x < worldSizeInChunks - 1 && coord.z >= 0 && coord.z < worldSizeInChunks - 1 );
 
 	public Vector3Int VoxelPositionInChunk( Vector3 voxelPosition ) => new Vector3Int( ( int )voxelPosition.x % chunkWidth, ( int )voxelPosition.y, ( int )voxelPosition.z % chunkWidth );
 
@@ -145,7 +145,7 @@ public class WorldData {
 
 	public bool CheckForVoxel( Vector3 voxelgPosition ) {
 		VoxelData voxel = GetVoxelData( voxelgPosition );
-		return ( voxel != null && blocks[ voxel.id ].canWalkOn ) ? true : false;
+		return ( voxel != null && blocks[ voxel.id ].canWalkOn );
 	}
 
 	public void EditVoxel( Vector3 voxelgPosition, byte newID, int orientation ) {

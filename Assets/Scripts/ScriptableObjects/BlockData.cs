@@ -12,7 +12,7 @@ public class BlockData : ScriptableObject {
 	[Range( 0, 15 ), Tooltip( "15 is industructable, 0 instant brake" )]
 	public byte hardness;
 
-	public bool renderNeighborFaces => ( opacityValue < 15 ) ? true : false;
+	public bool RenderNeighborFaces => ( opacityValue < 15 );
 
 	[Range( 0, 15 ), Tooltip( "15 is solid, 0 clear like glass" )]
 	public byte opacityValue;

@@ -21,6 +21,6 @@ public static class Noise {
 		float CB = Mathf.PerlinNoise( z, y );
 		float CA = Mathf.PerlinNoise( z, x );
 
-		return ( ( AB + BC + AC + BA + CB + CA ) / 6f > threshold ) ? true : false;
+		return ( ( AB + BC + AC + BA + CB + CA ) / 6f > threshold );
 	}
 }

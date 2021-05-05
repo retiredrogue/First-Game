@@ -21,9 +21,9 @@ public class VoxelData {
 
 	public int[] inverseFaceCheck = { 5, 4, 3, 2, 1, 0 };
 
-	public Vector3Int gPosition {
+	public Vector3Int GPosition {
 		get {
-			return new Vector3Int( lPosition.x + chunkData.gPosition.x, lPosition.y, lPosition.z + chunkData.gPosition.y );
+			return new Vector3Int( lPosition.x + chunkData.GPosition.x, lPosition.y, lPosition.z + chunkData.GPosition.y );
 		}
 	}
 
@@ -34,16 +34,16 @@ public class VoxelData {
 		neighbours = new VoxelNeighbours( this );
 	}
 
-	public BlockData properties {
+	public BlockData Properties {
 		get { return World.Instance.worldData.blocks[ id ]; }
 	}
 
-	public byte light {
+	public byte Light {
 		get { return _light; }
 		set {
 			if ( value != _light ) {
 				byte oldLightValue = _light;
-				byte oldCastValue = castLight;
+				byte oldCastValue = CastLight;
 
 				_light = value;
 
@@ -52,7 +52,7 @@ public class VoxelData {
 
 					for ( int p = 0; p < 6; p++ ) {
 						if ( neighbours[ p ] != null ) {
-							if ( neighbours[ p ].light <= oldCastValue )
+							if ( neighbours[ p ].Light <= oldCastValue )
 								neigboursToDarken.Add( p );
 							else
 								neighbours[ p ].PropogateLight();
@@ -60,7 +60,7 @@ public class VoxelData {
 					}
 
 					foreach ( int i in neigboursToDarken )
-						neighbours[ i ].light = 0;
+						neighbours[ i ].Light = 0;
 
 					if ( chunkData.chunk != null )
 						World.Instance.AddChunkToUpdate( chunkData.chunk );
@@ -70,13 +70,13 @@ public class VoxelData {
 		}
 	}
 
-	public float lightAsFloat {
-		get { return ( float )light * WorldData.unitOfLight; }
+	public float LightAsFloat {
+		get { return ( float )Light * WorldData.UnitOfLight; }
 	}
 
-	public byte castLight {
+	public byte CastLight {
 		get {
-			int lightLevel = _light - properties.opacityValue - 1;
+			int lightLevel = _light - Properties.opacityValue - 1;
 			if ( lightLevel < 0 )
 				lightLevel = 0;
 			return ( byte )lightLevel;
@@ -84,13 +84,13 @@ public class VoxelData {
 	}
 
 	public void PropogateLight() {
-		if ( light < 2 )
+		if ( Light < 2 )
 			return;
 
 		for ( int i = 0; i < 6; i++ ) {
 			if ( neighbours[ i ] != null ) {
-				if ( neighbours[ i ].light < castLight )
-					neighbours[ i ].light = castLight;
+				if ( neighbours[ i ].Light < CastLight )
+					neighbours[ i ].Light = CastLight;
 			}
 
 			if ( chunkData.chunk != null )
@@ -106,13 +106,13 @@ public class VoxelNeighbours {
 		voxel = _voxel;
 	}
 
-	private VoxelData[] _neighbours = new VoxelData[ 6 ];
+	private readonly VoxelData[] _neighbours = new VoxelData[ 6 ];
 	public int Length { get { return _neighbours.Length; } }
 
 	public VoxelData this[ int index ] {
 		get {
 			if ( _neighbours[ index ] == null ) {
-				_neighbours[ index ] = World.Instance.worldData.GetVoxelData( voxel.gPosition + voxel.faceCheck[ index ] );
+				_neighbours[ index ] = World.Instance.worldData.GetVoxelData( voxel.GPosition + voxel.faceCheck[ index ] );
 				ReturnNeighbour( index );
 			}
 			return _neighbours[ index ];

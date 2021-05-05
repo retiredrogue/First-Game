@@ -13,10 +13,10 @@ public class ChunkData {
 	public VoxelData[,,] voxelMap = new VoxelData[ WorldData.chunkWidth, WorldData.chunkHeight, WorldData.chunkWidth ];
 
 	public ChunkData( Vector2Int _gPosition ) {
-		gPosition = _gPosition;
+		GPosition = _gPosition;
 	}
 
-	public Vector2Int gPosition {//X Z PLAIN
+	public Vector2Int GPosition {//X Z PLAIN
 		get { return new Vector2Int( x, z ); }
 		set {
 			x = value.x;
@@ -28,11 +28,11 @@ public class ChunkData {
 		for ( int x = 0; x < WorldData.chunkWidth; x++ ) {
 			for ( int y = 0; y < WorldData.chunkHeight; y++ ) {
 				for ( int z = 0; z < WorldData.chunkWidth; z++ ) {
-					Vector3 voxelPosition = new Vector3( x + gPosition.x, y, z + gPosition.y );
+					Vector3 voxelPosition = new Vector3( x + GPosition.x, y, z + GPosition.y );
 					VoxelData voxel = voxelMap[ x, y, z ] = new VoxelData( World.Instance.GenVoxelData( voxelPosition ), this, new Vector3Int( x, y, z ) );
 
 					for ( int i = 0; i < 6; i++ ) {
-						Vector3Int neighbourPosition = voxel.gPosition + voxel.faceCheck[ i ];
+						Vector3Int neighbourPosition = voxel.GPosition + voxel.faceCheck[ i ];
 						if ( IsVoxelInChunk( neighbourPosition ) )
 							voxel.neighbours[ i ] = VoxelFromV3Int( neighbourPosition );
 						else
@@ -62,15 +62,15 @@ public class ChunkData {
 			return;
 
 		VoxelData voxel = voxelMap[ voxelChunkPosition.x, voxelChunkPosition.y, voxelChunkPosition.z ];
-		BlockData newVoxel = World.Instance.worldData.blocks[ _id ];
+		//BlockData newVoxel = World.Instance.worldData.blocks[ _id ];
 
-		byte oldOpacity = voxel.properties.opacityValue;
+		byte oldOpacity = voxel.Properties.opacityValue;
 
 		voxel.id = _id;
 		//voxel.orientation = orientation;
 
-		if ( voxel.properties.opacityValue != oldOpacity &&
-			( voxelChunkPosition.y == WorldData.chunkHeight - 1 || voxelMap[ voxelChunkPosition.x, voxelChunkPosition.y + 1, voxelChunkPosition.z ].light == 15 ) ) {
+		if ( voxel.Properties.opacityValue != oldOpacity &&
+			( voxelChunkPosition.y == WorldData.chunkHeight - 1 || voxelMap[ voxelChunkPosition.x, voxelChunkPosition.y + 1, voxelChunkPosition.z ].Light == 15 ) ) {
 			Lighting.CastNaturalLight( this, voxelChunkPosition.x, voxelChunkPosition.z, voxelChunkPosition.y + 1 );
 		}
 
@@ -80,7 +80,7 @@ public class ChunkData {
 			World.Instance.AddChunkToUpdate( chunk );
 	}
 
-	public bool IsVoxelInChunk( int x, int y, int z ) => ( x < 0 || x > WorldData.chunkWidth - 1 || y < 0 || y > WorldData.chunkHeight - 1 || z < 0 || z > WorldData.chunkWidth - 1 ) ? false : true;
+	public bool IsVoxelInChunk( int x, int y, int z ) => x >= 0 && x <= WorldData.chunkWidth - 1 && y >= 0 && y <= WorldData.chunkHeight - 1 && z >= 0 && z <= WorldData.chunkWidth - 1;
 
 	public bool IsVoxelInChunk( Vector3Int pos ) => IsVoxelInChunk( pos.x, pos.y, pos.z );
 

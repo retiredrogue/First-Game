@@ -20,15 +20,15 @@ public class World : MonoBehaviour {
 	public WorldData worldData;
 	public GameAssetsData gameAssetsData;
 
-	private List<ChunkCoord> activeChunks = new List<ChunkCoord>();
-	private List<Chunk> chunksToUpdate = new List<Chunk>();
+	private readonly List<ChunkCoord> activeChunks = new List<ChunkCoord>();
+	private readonly List<Chunk> chunksToUpdate = new List<Chunk>();
 	public Queue<Chunk> chunksToDraw = new Queue<Chunk>();
 
 	private bool applyingModifications = false;
-	private Queue<Queue<VoxelMod>> modifications = new Queue<Queue<VoxelMod>>();
+	private readonly Queue<Queue<VoxelMod>> modifications = new Queue<Queue<VoxelMod>>();
 
 	private int loadDistance;
-	private int viewDistance = 3;
+	private readonly int viewDistance = 3;
 
 	public bool isWorldLoaded = false;
 
@@ -93,9 +93,9 @@ public class World : MonoBehaviour {
 
 	public void DayNightCycle() {
 		GameTime.Tick();
-		if ( GameTime.ticksPassed >= 16200 && GameTime.ticksPassed <= 66600 && globalLightLevel <= .9 )
+		if ( GameTime.TicksPassed >= 16200 && GameTime.TicksPassed <= 66600 && globalLightLevel <= .9 )
 			globalLightLevel += .0005f;
-		if ( GameTime.ticksPassed >= 66600 && globalLightLevel >= .05 )
+		if ( GameTime.TicksPassed >= 66600 && globalLightLevel >= .05 )
 			globalLightLevel -= .0005f;
 
 		SetGlobalLightValue();
@@ -148,10 +148,10 @@ public class World : MonoBehaviour {
 					}
 					//displays chunks in view
 					else if ( x >= coord.x - viewDistance && x < coord.x + viewDistance + 1 && z >= coord.z - viewDistance && z < coord.z + viewDistance + 1 ) {
-						worldData.chunkMap[ x, z ].isActive = true;
+						worldData.chunkMap[ x, z ].IsActive = true;
 						activeChunks.Add( thisChunkCoord );
 					} else {
-						worldData.chunkMap[ x, z ].isActive = false;
+						worldData.chunkMap[ x, z ].IsActive = false;
 					}
 				}
 				// Check through previously active chunks to see if this chunk is there. If it is, remove it from the list.
@@ -220,7 +220,7 @@ public class World : MonoBehaviour {
 
 		/* BASIC TERRAIN PASS */
 
-		byte voxelID = 0;
+		byte voxelID;
 
 		if ( yPos == terrainHeight )
 			voxelID = biome.surfaceBlock;

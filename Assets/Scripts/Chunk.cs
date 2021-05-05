@@ -3,28 +3,28 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Chunk {
-	private GameObject chunkObject;
-	private MeshCollider meshCollider;
-	private MeshFilter meshFilter;
-	private MeshRenderer meshRenderer;
+	private readonly GameObject chunkObject;
+	private readonly MeshCollider meshCollider;
+	private readonly MeshFilter meshFilter;
+	private readonly MeshRenderer meshRenderer;
 
 	public ChunkData chunkData;
 
 	private int vertexIndex = 0;
-	private List<Vector3> vertices = new List<Vector3>();
+	private readonly List<Vector3> vertices = new List<Vector3>();
 
-	private List<int> triangles = new List<int>();
-	private List<int> transparentTriangles = new List<int>();
+	private readonly List<int> triangles = new List<int>();
+	private readonly List<int> transparentTriangles = new List<int>();
 
-	private List<Vector2> uvs = new List<Vector2>();
-	private List<Color> colors = new List<Color>();
-	private List<Vector3> normals = new List<Vector3>();
+	private readonly List<Vector2> uvs = new List<Vector2>();
+	private readonly List<Color> colors = new List<Color>();
+	private readonly List<Vector3> normals = new List<Vector3>();
 
 	public Vector3 gPosition;
 
 	private bool _isActive;
 
-	public bool isActive {
+	public bool IsActive {
 		get { return _isActive; }
 		set {
 			_isActive = value;
@@ -37,7 +37,7 @@ public class Chunk {
 		chunkData = World.Instance.worldData.RequestChunkData( new Vector2Int( _coord.x, _coord.z ), true );
 
 		chunkData.coord = _coord;
-		gPosition = new Vector3( chunkData.gPosition.x, 0, chunkData.gPosition.y );
+		gPosition = new Vector3( chunkData.GPosition.x, 0, chunkData.GPosition.y );
 
 		chunkObject = new GameObject();
 		meshFilter = chunkObject.AddComponent<MeshFilter>();
@@ -90,26 +90,26 @@ public class Chunk {
 		for ( int i = 0; i < 6; i++ ) {
 			VoxelData neighbour = voxel.neighbours[ i ];
 
-			if ( neighbour != null && neighbour.properties.renderNeighborFaces ) {
-				float lightLevel = neighbour.lightAsFloat;
+			if ( neighbour != null && neighbour.Properties.RenderNeighborFaces ) {
+				float lightLevel = neighbour.LightAsFloat;
 
 				int faceVertCount = 0;
 
-				for ( int j = 0; j < voxel.properties.voxelStructure.faces[ i ].vertData.Length; j++ ) {
-					VertData vertData = voxel.properties.voxelStructure.faces[ i ].vertData[ j ];
+				for ( int j = 0; j < voxel.Properties.voxelStructure.faces[ i ].vertData.Length; j++ ) {
+					VertData vertData = voxel.Properties.voxelStructure.faces[ i ].vertData[ j ];
 					vertices.Add( pos + vertData.vertex );
-					normals.Add( voxel.properties.voxelStructure.faces[ i ].normal );
+					normals.Add( voxel.Properties.voxelStructure.faces[ i ].normal );
 					colors.Add( new Color( 0, 0, 0, lightLevel ) );
-					AddTextures( voxel.properties.GetVoxelFace( i ), voxel.properties.voxelStructure.faces[ i ].vertData[ j ].uv );
+					AddTextures( voxel.Properties.GetVoxelFace( i ), voxel.Properties.voxelStructure.faces[ i ].vertData[ j ].uv );
 					faceVertCount++;
 				}
 
-				if ( !voxel.properties.renderNeighborFaces ) {
-					for ( int j = 0; j < voxel.properties.voxelStructure.faces[ i ].triangles.Length; j++ )
-						triangles.Add( vertexIndex + voxel.properties.voxelStructure.faces[ i ].triangles[ j ] );
+				if ( !voxel.Properties.RenderNeighborFaces ) {
+					for ( int j = 0; j < voxel.Properties.voxelStructure.faces[ i ].triangles.Length; j++ )
+						triangles.Add( vertexIndex + voxel.Properties.voxelStructure.faces[ i ].triangles[ j ] );
 				} else {
-					for ( int j = 0; j < voxel.properties.voxelStructure.faces[ i ].triangles.Length; j++ )
-						transparentTriangles.Add( vertexIndex + voxel.properties.voxelStructure.faces[ i ].triangles[ j ] );
+					for ( int j = 0; j < voxel.Properties.voxelStructure.faces[ i ].triangles.Length; j++ )
+						transparentTriangles.Add( vertexIndex + voxel.Properties.voxelStructure.faces[ i ].triangles[ j ] );
 				}
 
 				vertexIndex += faceVertCount;
@@ -118,10 +118,11 @@ public class Chunk {
 	}
 
 	public void CreateMesh() {
-		Mesh mesh = new Mesh();
-		mesh.vertices = vertices.ToArray();
+		Mesh mesh = new Mesh {
+			vertices = vertices.ToArray(),
 
-		mesh.subMeshCount = 2;
+			subMeshCount = 2
+		};
 		mesh.SetTriangles( triangles.ToArray(), 0 );
 		mesh.SetTriangles( transparentTriangles.ToArray(), 1 );
 		mesh.uv = uvs.ToArray();
@@ -136,13 +137,13 @@ public class Chunk {
 		float y = textureID / WorldData.textureAtlasSizeInBlocks;
 		float x = textureID - ( y * WorldData.textureAtlasSizeInBlocks );
 
-		x *= WorldData.normalizedBlockTextureSize;
-		y *= WorldData.normalizedBlockTextureSize;
+		x *= WorldData.NormalizedBlockTextureSize;
+		y *= WorldData.NormalizedBlockTextureSize;
 
-		y = 1f - y - WorldData.normalizedBlockTextureSize;
+		y = 1f - y - WorldData.NormalizedBlockTextureSize;
 
-		x += WorldData.normalizedBlockTextureSize * uv.x;
-		y += WorldData.normalizedBlockTextureSize * uv.y;
+		x += WorldData.NormalizedBlockTextureSize * uv.x;
+		y += WorldData.NormalizedBlockTextureSize * uv.y;
 
 		uvs.Add( new Vector2( x, y ) );
 	}

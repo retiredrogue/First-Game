@@ -24,30 +24,30 @@ public static class Lighting {
 			VoxelData voxel = chunkData.voxelMap[ x, y, z ];
 
 			if ( obstructed ) {
-				voxel.light = 0;
-			} else if ( voxel.properties.opacityValue > 0 ) {
-				voxel.light = 0;
+				voxel.Light = 0;
+			} else if ( voxel.Properties.opacityValue > 0 ) {
+				voxel.Light = 0;
 				obstructed = true;
 			} else
-				voxel.light = 15;
+				voxel.Light = 15;
 		}
 	}
 }
 
 public static class GameTime {
-	private static float tickInterval = 1 / 60f * Time.deltaTime;
-	private static int maxTicksPerDay = 86400;
+	private static readonly float tickInterval = 1 / 60f * Time.deltaTime;
+	private static readonly int maxTicksPerDay = 86400;
 	private static float timer = 0;
 	private static int tickCount = 0; // 8:15 AM 29700
-	public static int minutes { get { return tickCount % 3600 / 60; } }
+	public static int Minutes { get { return tickCount % 3600 / 60; } }
 
-	public static int hours {
+	public static int Hours {
 		get {
 			return ( tickCount / 3600 >= 12 ) ? tickCount / 3600 - 12 : tickCount / 3600;
 		}
 	}
 
-	public static int ticksPassed { get { return tickCount; } }
+	public static int TicksPassed { get { return tickCount; } }
 
 	public static void Tick() {
 		timer += Time.deltaTime;

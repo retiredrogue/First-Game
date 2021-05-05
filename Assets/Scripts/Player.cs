@@ -1,4 +1,5 @@
 using UnityEngine;
+using System;
 
 public class Player : MonoBehaviour {
 	public LayerMask targetBlock;
@@ -39,6 +40,12 @@ public class Player : MonoBehaviour {
 	public float reach = 8;
 
 	public GameObject blockHighLight;
+
+	public event EventHandler<OnBlockBrokeEventArgs> OnBlockBroke;
+
+	public class OnBlockBrokeEventArgs : EventArgs { public Vector3 pos; public byte blockID; }
+
+	public event EventHandler OnItemGrabbed;
 
 	private void Start() {
 		world = GameObject.Find( "World" ).GetComponent<World>();
@@ -142,7 +149,7 @@ public class Player : MonoBehaviour {
 		while ( step < reach ) {
 			Vector3 pos = cam.position + ( cam.forward * step );
 			if ( World.Instance.worldData.CheckForVoxel( pos ) ) {
-				Vector3 voxelPos = World.Instance.worldData.GetVoxelData( pos ).gPosition;
+				Vector3 voxelPos = World.Instance.worldData.GetVoxelData( pos ).GPosition;
 				blockHighLight.transform.position = voxelPos;
 				blockHighLight.gameObject.SetActive( true );
 				return;
@@ -153,13 +160,14 @@ public class Player : MonoBehaviour {
 	}
 
 	private void RemoveBlock( Vector3 voxelgPosition ) {
-		if ( World.Instance.worldData.CheckForVoxel( voxelgPosition ) )
+		if ( World.Instance.worldData.CheckForVoxel( voxelgPosition ) ) {
+			OnBlockBroke?.Invoke( this, new OnBlockBrokeEventArgs { pos = voxelgPosition, blockID = World.Instance.worldData.GetVoxelData( voxelgPosition ).id } );
 			World.Instance.worldData.EditVoxel( voxelgPosition, 0/*air block*/ );
+		}
 	}
 
 	private void PlaceBlock( Vector3 highLightPosition ) {
-		RaycastHit hit;
-		if ( Physics.Raycast( cam.position, cam.forward * reach, out hit, reach, targetBlock ) ) {
+		if ( Physics.Raycast( cam.position, cam.forward * reach, out RaycastHit hit, reach, targetBlock ) ) {
 			if ( toolBar.slots[ toolBar.slotIndex ].HasItem ) {
 				Vector3 newVoxelPos = highLightPosition + hit.normal;
 				World.Instance.worldData.EditVoxel( newVoxelPos, toolBar.slots[ toolBar.slotIndex ].itemSlot.item.id );

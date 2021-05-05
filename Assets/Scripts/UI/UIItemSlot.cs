@@ -34,7 +34,7 @@ public class UIItemSlot : MonoBehaviour {
 	}
 
 	public void UnLink() {
-		itemSlot.unLinkUISlot();
+		itemSlot.UnLinkUISlot();
 		itemSlot = null;
 		UpdateSlot();
 	}
@@ -58,7 +58,7 @@ public class UIItemSlot : MonoBehaviour {
 
 	private void OnDestroy() {
 		if ( itemSlot != null )
-			itemSlot.unLinkUISlot();
+			itemSlot.UnLinkUISlot();
 	}
 }
 
@@ -84,7 +84,7 @@ public class ItemSlot {
 		uiItemSlot = uiSlot;
 	}
 
-	public void unLinkUISlot() {
+	public void UnLinkUISlot() {
 		uiItemSlot = null;
 	}
 
@@ -110,7 +110,9 @@ public class ItemSlot {
 	}
 
 	public ItemData TakeAll() {
-		ItemData handOver = new ItemData( item.id, item.amount );
+		ItemData handOver = ScriptableObject.CreateInstance<ItemData>();
+		handOver.id = item.id;
+		handOver.amount = item.amount;
 		EmptySlot();
 		return handOver;
 	}

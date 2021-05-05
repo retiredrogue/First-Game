@@ -10,6 +10,9 @@ public static class Structures {
 
 			case 1:
 				return MakeCacti( gPosition, minStemHeight, maxStemHeight );
+
+			default:
+				break;
 		}
 
 		return new Queue<VoxelMod>();

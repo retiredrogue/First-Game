@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System;
 
 public class ItemDrop : MonoBehaviour {
 	public byte blockID;
@@ -12,35 +11,26 @@ public class ItemDrop : MonoBehaviour {
 	public MeshRenderer meshRenderer;
 
 	private int vertexIndex = 0;
-	private List<Vector3> vertices = new List<Vector3>();
+	private readonly List<Vector3> vertices = new List<Vector3>();
 
-	private List<int> transparentTriangles = new List<int>();
+	private readonly List<int> transparentTriangles = new List<int>();
 
-	private List<Vector2> uvs = new List<Vector2>();
-	private List<Vector3> normals = new List<Vector3>();
+	private readonly List<Vector2> uvs = new List<Vector2>();
+	private readonly List<Vector3> normals = new List<Vector3>();
 
-	public event EventHandler OnItemDropped;
-
-	public event EventHandler OnItemGrabbed;
-
-	public void Start() {
-		UpdateChunkData();
+	private void Start() {
+		World.Instance.player.GetComponent<Player>().OnBlockBroke += ItemDrop_OnBlockBroke;
 	}
 
-	public void UpdateChunkData() {
+	private void ItemDrop_OnBlockBroke( object sender, Player.OnBlockBrokeEventArgs e ) {
+		Vector3 newPos = e.pos + new Vector3( .5f, .5f, .5f );
+		blockID = e.blockID;
+		Debug.Log( "make Block" );
+		MakeDroppedBlockMesh( newPos );
+	}
+
+	private void MakeDroppedBlockMesh( Vector3 globalPos ) {
 		ClearMeshData();
-		UpdateVoxelMeshData( Vector3.zero );
-	}
-
-	private void ClearMeshData() {
-		vertexIndex = 0;
-		vertices.Clear();
-		transparentTriangles.Clear();
-		uvs.Clear();
-		normals.Clear();
-	}
-
-	public void UpdateVoxelMeshData( Vector3 globalPos ) {
 		BlockData voxel = World.Instance.worldData.blocks[ blockID ];
 
 		for ( int i = 0; i < 6; i++ ) {
@@ -60,14 +50,23 @@ public class ItemDrop : MonoBehaviour {
 		CreateMesh();
 	}
 
-	public void CreateMesh() {
-		Mesh mesh = new Mesh();
-		mesh.vertices = vertices.ToArray();
+	private void ClearMeshData() {
+		vertexIndex = 0;
+		vertices.Clear();
+		transparentTriangles.Clear();
+		uvs.Clear();
+		normals.Clear();
+	}
 
-		mesh.subMeshCount = 2;
-		mesh.triangles = transparentTriangles.ToArray();
-		mesh.uv = uvs.ToArray();
-		mesh.normals = normals.ToArray();
+	public void CreateMesh() {
+		Mesh mesh = new Mesh {
+			vertices = vertices.ToArray(),
+
+			subMeshCount = 2,
+			triangles = transparentTriangles.ToArray(),
+			uv = uvs.ToArray(),
+			normals = normals.ToArray()
+		};
 
 		meshFilter.mesh = mesh;
 	}
@@ -76,13 +75,13 @@ public class ItemDrop : MonoBehaviour {
 		float y = textureID / WorldData.textureAtlasSizeInBlocks;
 		float x = textureID - ( y * WorldData.textureAtlasSizeInBlocks );
 
-		x *= WorldData.normalizedBlockTextureSize;
-		y *= WorldData.normalizedBlockTextureSize;
+		x *= WorldData.NormalizedBlockTextureSize;
+		y *= WorldData.NormalizedBlockTextureSize;
 
-		y = 1f - y - WorldData.normalizedBlockTextureSize;
+		y = 1f - y - WorldData.NormalizedBlockTextureSize;
 
-		x += WorldData.normalizedBlockTextureSize * uv.x;
-		y += WorldData.normalizedBlockTextureSize * uv.y;
+		x += WorldData.NormalizedBlockTextureSize * uv.x;
+		y += WorldData.NormalizedBlockTextureSize * uv.y;
 
 		uvs.Add( new Vector2( x, y ) );
 	}
