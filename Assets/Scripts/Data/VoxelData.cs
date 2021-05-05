@@ -34,7 +34,7 @@ public class VoxelData {
 		neighbours = new VoxelNeighbours( this );
 	}
 
-	public BlockTypeData properties {
+	public BlockData properties {
 		get { return World.Instance.worldData.blocks[ id ]; }
 	}
 

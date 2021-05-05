@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu( fileName = "New Voxel Type", menuName = "ScriptableObjects/Voxel Type Data" )]
+[CreateAssetMenu( fileName = "New Voxel Sturcture", menuName = "ScriptableObjects/Voxel Sturcture Data" )]
 public class VoxelSturctureData : ScriptableObject {
 	public FaceVoxelStructure[] faces = new FaceVoxelStructure[ 6 ];
 }

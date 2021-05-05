@@ -1,0 +1,87 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2418b59a8571d974aa94d8b43d8c8d48, type: 3}
+  m_Name: Dropped block
+  m_EditorClassIdentifier: 
+  faces:
+  - faceDirection: Front
+    normal: {x: 0, y: 0, z: 1}
+    vertData:
+    - vertex: {x: 0.25, y: 0, z: 0.25}
+      uv: {x: 0, y: 0}
+    - vertex: {x: 0.25, y: 0.25, z: 0.25}
+      uv: {x: 0, y: 1}
+    - vertex: {x: 0, y: 0.25, z: 0.25}
+      uv: {x: 1, y: 1}
+    - vertex: {x: 0, y: 0, z: 0.25}
+      uv: {x: 1, y: 0}
+    triangles: 000000000100000002000000020000000300000000000000
+  - faceDirection: Top
+    normal: {x: 0, y: 1, z: 0}
+    vertData:
+    - vertex: {x: 0, y: 0.25, z: 0}
+      uv: {x: 0, y: 0}
+    - vertex: {x: 0, y: 0.25, z: 0.25}
+      uv: {x: 0, y: 1}
+    - vertex: {x: 0.25, y: 0.25, z: 0.25}
+      uv: {x: 1, y: 1}
+    - vertex: {x: 0.25, y: 0.25, z: 0}
+      uv: {x: 1, y: 0}
+    triangles: 000000000100000002000000020000000300000000000000
+  - faceDirection: Right
+    normal: {x: 1, y: 0, z: 0}
+    vertData:
+    - vertex: {x: 0.25, y: 0, z: 0}
+      uv: {x: 0, y: 0}
+    - vertex: {x: 0.25, y: 0.25, z: 0}
+      uv: {x: 0, y: 1}
+    - vertex: {x: 0.25, y: 0.25, z: 0.25}
+      uv: {x: 1, y: 1}
+    - vertex: {x: 0.25, y: 0, z: 0.25}
+      uv: {x: 1, y: 0}
+    triangles: 000000000100000002000000020000000300000000000000
+  - faceDirection: Left
+    normal: {x: -1, y: 0, z: 0}
+    vertData:
+    - vertex: {x: 0, y: 0, z: 0.25}
+      uv: {x: 0, y: 0}
+    - vertex: {x: 0, y: 0.25, z: 0.25}
+      uv: {x: 0, y: 1}
+    - vertex: {x: 0, y: 0.25, z: 0}
+      uv: {x: 1, y: 1}
+    - vertex: {x: 0, y: 0, z: 0}
+      uv: {x: 1, y: 0}
+    triangles: 000000000100000002000000020000000300000000000000
+  - faceDirection: Bottom
+    normal: {x: 0, y: -1, z: 0}
+    vertData:
+    - vertex: {x: 0, y: 0, z: 0.25}
+      uv: {x: 0, y: 0}
+    - vertex: {x: 0, y: 0, z: 0}
+      uv: {x: 0, y: 1}
+    - vertex: {x: 0.25, y: 0, z: 0}
+      uv: {x: 1, y: 1}
+    - vertex: {x: 0.25, y: 0, z: 0.25}
+      uv: {x: 1, y: 0}
+    triangles: 000000000100000002000000020000000300000000000000
+  - faceDirection: Back
+    normal: {x: 0, y: 0, z: -1}
+    vertData:
+    - vertex: {x: 0, y: 0, z: 0}
+      uv: {x: 0, y: 0}
+    - vertex: {x: 0, y: 0.25, z: 0}
+      uv: {x: 0, y: 1}
+    - vertex: {x: 0.25, y: 0.25, z: 0}
+      uv: {x: 1, y: 1}
+    - vertex: {x: 0.25, y: 0, z: 0}
+      uv: {x: 1, y: 0}
+    triangles: 000000000100000002000000020000000300000000000000

@@ -30,6 +30,10 @@ public class Player : MonoBehaviour {
 	private float mouseSensitivity;
 	private float xRotation = 0f;
 
+	public GameObject inventory;
+
+	public bool inUI = false;
+
 	public ToolBar toolBar;
 
 	public float reach = 8;
@@ -48,26 +52,29 @@ public class Player : MonoBehaviour {
 	}
 
 	private void FixedUpdate() {
-		//if ( !world.inUI )
-		CalculateVelocity();
+		if ( !inUI )
+			CalculateVelocity();
 		if ( world.isWorldLoaded )
 			SetGravity();
 	}
 
 	private void Update() {
-		//if ( Input.GetKeyDown( KeyCode.E ) ) {
-		//	world.inUI = !world.inUI;
-		//	Cursor.lockState = CursorLockMode.None;
-		//}
-		//if ( !world.inUI ) {
-		GetPlayerInputs();
-		CalculateVelocity();
-		PlayerView();
-		if ( world.isWorldLoaded )
-			BlockHighLightPosition();
-		controller.Move( velocity * Time.deltaTime );
-		//	Cursor.lockState = CursorLockMode.Locked;
-		//}
+		if ( Input.GetKeyDown( KeyCode.E ) ) {
+			inUI = !inUI;
+			inventory.SetActive( inUI );
+			Cursor.lockState = CursorLockMode.None;
+		}
+		if ( !inUI ) {
+			GetPlayerInputs();
+			CalculateVelocity();
+			PlayerView();
+
+			if ( world.isWorldLoaded )
+				BlockHighLightPosition();
+
+			controller.Move( velocity * Time.deltaTime );
+			Cursor.lockState = CursorLockMode.Locked;
+		}
 		//Vector3 XZDirection = transform.forward;
 		//XZDirection.y = 0;
 		//if ( Vector3.Angle( XZDirection, Vector3.forward ) <= 45 )

@@ -1,7 +1,7 @@
 using UnityEngine;
 
-[CreateAssetMenu( fileName = "New BlockType", menuName = "ScriptableObjects/Block Data" )]
-public class BlockTypeData : ScriptableObject {
+[CreateAssetMenu( fileName = "New Block", menuName = "ScriptableObjects/Block Data" )]
+public class BlockData : ScriptableObject {
 	public bool canWalkOn;
 	public bool canPassThrough;
 	public VoxelSturctureData voxelStructure;

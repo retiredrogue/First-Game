@@ -31,7 +31,7 @@ public static class Structures {
 			for ( int x = -2; x < 3; x++ ) {
 				for ( int z = -2; z < 3; z++ ) {
 					Vector3 pos = new Vector3( gPosition.x + x, gPosition.y + height + y, gPosition.z + z );
-					byte voxelID = World.Instance.GetVoxel( pos );
+					byte voxelID = World.Instance.GenVoxelData( pos );
 					if ( voxelID == 0 )
 						queue.Enqueue( new VoxelMod( pos, 11 ) );
 				}

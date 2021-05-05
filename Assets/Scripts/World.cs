@@ -170,7 +170,7 @@ public class World : MonoBehaviour {
 		chunksToUpdate.RemoveAt( 0 );
 	}
 
-	public byte GetVoxel( Vector3 globalPos ) {
+	public byte GenVoxelData( Vector3 globalPos ) {
 		int yPos = Mathf.FloorToInt( globalPos.y );
 
 		/* IMMUTABLE PASS */
@@ -272,7 +272,7 @@ public class VoxelMod {
 
 [System.Serializable]
 public class GameAssetsData {
-	public BlockTypeData[] blockTypes;
+	public BlockData[] blockTypes;
 	public ItemData[] items;
 	public Biome[] biomes;
 	public Material[] materials;

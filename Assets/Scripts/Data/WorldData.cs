@@ -11,7 +11,7 @@ public class WorldData {
 	public static int worldSizeInChunks = 10;
 	public static int terrainHeight = chunkHeight / 2;
 
-	public BlockTypeData[] blocks;
+	public BlockData[] blocks;
 	public Biome[] biomes;
 	public Material[] materials;
 
