@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [CreateAssetMenu( fileName = "New Voxel Sturcture", menuName = "ScriptableObjects/Voxel Sturcture Data" )]
-public class VoxelSturctureData : ScriptableObject {
+public class VoxelStructureData : ScriptableObject {
 	public FaceVoxelStructure[] faces = new FaceVoxelStructure[ 6 ];
 }
 

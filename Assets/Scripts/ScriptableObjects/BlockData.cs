@@ -4,7 +4,7 @@ using UnityEngine;
 public class BlockData : ScriptableObject {
 	public bool canWalkOn;
 	public bool canPassThrough;
-	public VoxelSturctureData voxelStructure;
+	public VoxelStructureData voxelStructure;
 	public bool isFluid;
 	public bool isRotatable;
 	public bool doesFall;

@@ -6,6 +6,8 @@ public class World : MonoBehaviour {
 	private static World _instance;
 	public static World Instance => _instance;
 
+	public VoxelStructureData[] itemEntityStructure;
+
 	[Range( 0f, 1f )]
 	public float globalLightLevel;
 

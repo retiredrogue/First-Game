@@ -1,5 +1,4 @@
 using UnityEngine;
-using System;
 
 public class Player : MonoBehaviour {
 	public LayerMask targetBlock;
@@ -31,7 +30,7 @@ public class Player : MonoBehaviour {
 	private float mouseSensitivity;
 	private float xRotation = 0f;
 
-	public GameObject inventory;
+	public Inventory inventory;
 
 	public bool inUI = false;
 
@@ -40,12 +39,6 @@ public class Player : MonoBehaviour {
 	public float reach = 8;
 
 	public GameObject blockHighLight;
-
-	public event EventHandler<OnBlockBrokeEventArgs> OnBlockBroke;
-
-	public class OnBlockBrokeEventArgs : EventArgs { public Vector3 pos; public byte blockID; }
-
-	public event EventHandler OnItemGrabbed;
 
 	private void Start() {
 		world = GameObject.Find( "World" ).GetComponent<World>();
@@ -68,7 +61,7 @@ public class Player : MonoBehaviour {
 	private void Update() {
 		if ( Input.GetKeyDown( KeyCode.E ) ) {
 			inUI = !inUI;
-			inventory.SetActive( inUI );
+			inventory.gameObject.SetActive( inUI );
 			Cursor.lockState = CursorLockMode.None;
 		}
 		if ( !inUI ) {
@@ -161,7 +154,7 @@ public class Player : MonoBehaviour {
 
 	private void RemoveBlock( Vector3 voxelgPosition ) {
 		if ( World.Instance.worldData.CheckForVoxel( voxelgPosition ) ) {
-			OnBlockBroke?.Invoke( this, new OnBlockBrokeEventArgs { pos = voxelgPosition, blockID = World.Instance.worldData.GetVoxelData( voxelgPosition ).id } );
+			new ItemEntity( World.Instance.worldData.GetVoxelData( voxelgPosition ).id, voxelgPosition, World.Instance.itemEntityStructure[ 0 ] );
 			World.Instance.worldData.EditVoxel( voxelgPosition, 0/*air block*/ );
 		}
 	}
