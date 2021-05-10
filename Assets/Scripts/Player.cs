@@ -117,10 +117,10 @@ public class Player : MonoBehaviour {
 		if ( Input.GetKeyUp( KeyCode.Space ) )
 			OnJumpInputUp();
 
-		if ( Input.GetMouseButtonDown( 0 ) )
+		if ( Input.GetMouseButtonDown( 0 ) && blockHighLight.activeSelf )
 			RemoveBlock( blockHighLight.transform.position );
 
-		if ( Input.GetMouseButtonDown( 1 ) )
+		if ( Input.GetMouseButtonDown( 1 ) && blockHighLight.activeSelf )
 			PlaceBlock( blockHighLight.transform.position );
 	}
 
@@ -154,7 +154,14 @@ public class Player : MonoBehaviour {
 
 	private void RemoveBlock( Vector3 voxelgPosition ) {
 		if ( World.Instance.worldData.CheckForVoxel( voxelgPosition ) ) {
-			new ItemEntity( World.Instance.worldData.GetVoxelData( voxelgPosition ).id, voxelgPosition, World.Instance.itemEntityStructure[ 0 ] );
+			ItemEntity newItemEntity = World.Instance.itemEntityPf;
+
+			newItemEntity.transform.position = voxelgPosition;
+			newItemEntity.structureData = World.Instance.itemEntityStructure[ 0 ];
+			newItemEntity.blockID = World.Instance.worldData.GetVoxelData( voxelgPosition ).id;
+
+			Instantiate( newItemEntity );
+
 			World.Instance.worldData.EditVoxel( voxelgPosition, 0/*air block*/ );
 		}
 	}

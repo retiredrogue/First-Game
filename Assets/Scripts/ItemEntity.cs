@@ -2,9 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ItemEntity {
-	private readonly GameObject floatingObject;
-
+public class ItemEntity : MonoBehaviour {
 	public byte blockID;
 	public int itemID;
 
@@ -12,9 +10,9 @@ public class ItemEntity {
 
 	public VoxelStructureData structureData;
 
-	private readonly MeshFilter meshFilter;
-	private readonly MeshRenderer meshRenderer;
-	private readonly BoxCollider collider;
+	private MeshFilter meshFilter;
+	private MeshRenderer meshRenderer;
+	private new BoxCollider collider;
 
 	private int vertexIndex = 0;
 	private readonly List<Vector3> vertices = new List<Vector3>();
@@ -24,22 +22,15 @@ public class ItemEntity {
 	private readonly List<Vector2> uvs = new List<Vector2>();
 	private readonly List<Vector3> normals = new List<Vector3>();
 
-	public ItemEntity( byte _id, Vector3 pos, VoxelStructureData _structureData ) {
-		Vector3 newPos = pos + new Vector3( blockOffset, blockOffset, blockOffset );
-		if ( _id == 3/*grass*/ )
+	private void Start() {
+		transform.position += new Vector3( blockOffset, blockOffset, blockOffset );
+
+		if ( blockID == 3/*grass*/ )
 			blockID = 8;
-		else
-			blockID = _id;
-		structureData = _structureData;
 
-		Debug.Log( "make Block" );
-
-		floatingObject = new GameObject();
-		floatingObject.transform.position = newPos;
-
-		meshFilter = floatingObject.AddComponent<MeshFilter>();
-		meshRenderer = floatingObject.AddComponent<MeshRenderer>();
-		collider = floatingObject.AddComponent<BoxCollider>();
+		meshFilter = GetComponent<MeshFilter>();
+		meshRenderer = GetComponent<MeshRenderer>();
+		collider = GetComponent<BoxCollider>();
 
 		collider.size /= 4;
 		collider.isTrigger = true;
@@ -108,7 +99,6 @@ public class ItemEntity {
 	}
 
 	private void OnTriggerEnter( Collider other ) {
-		Debug.Log( "collide" );
 		if ( other.CompareTag( "Player" ) ) {
 			Player player = other.gameObject.GetComponent<Player>();
 
@@ -116,29 +106,41 @@ public class ItemEntity {
 			for ( int i = 0; i < player.toolBar.slots.Length; i++ ) {
 				UIItemSlot slot = player.toolBar.slots[ i ];
 				if ( slot.HasItem ) {
-					if ( slot.itemSlot.item.id == blockID && slot.itemSlot.item.amount < slot.itemSlot.item.maxStackSize ) {
+					Debug.Log( " slot block ID: " + slot.itemSlot.item.id + " block ID: " + blockID );
+
+					if ( slot.itemSlot.item.id == blockID )
+						Debug.Log( "hi" );
+					if ( slot.itemSlot.item.amount < slot.itemSlot.item.maxStackSize ) {
+						Debug.Log( "toolBar Slot " + i + ": added" );
 						player.toolBar.slots[ i ].itemSlot.Add( 1 );
-						GameObject.Destroy( floatingObject );
+						Destroy( gameObject );
 					}
 				}
 			}
+			Debug.Log( "toolBar Slot has no equillalent item" );
 
 			//inventory check
 			for ( int i = 0; i < player.inventory.slots.Length; i++ ) {
 				UIItemSlot slot = player.inventory.slots[ i ];
 				if ( slot.HasItem ) {
+					Debug.Log( " slot block ID: " + slot.itemSlot.item.id + " block ID: " + blockID );
 					if ( player.inventory.slots[ i ].itemSlot.item.id == blockID && slot.itemSlot.item.amount < slot.itemSlot.item.maxStackSize ) {
+						Debug.Log( "inventory Slot " + i + ": added" );
+
 						player.inventory.slots[ i ].itemSlot.Add( 1 );
-						GameObject.Destroy( floatingObject );
+						Destroy( gameObject );
 					}
 				}
 			}
+			Debug.Log( "inventory Slot has no equillalent item" );
 
 			// no item previouns item found add to last empty slot
 			if ( player.inventory.emptySlots.Count != 0 ) {
+				Debug.Log( "item added to last inventory Slot" );
+
 				player.inventory.emptySlots[ player.inventory.emptySlots.Count - 1 ].itemSlot.Add( 1 );
 				player.inventory.emptySlots.RemoveAt( player.inventory.emptySlots.Count - 1 );
-				GameObject.Destroy( floatingObject );
+				Destroy( gameObject );
 			} else // No room for item
 				Debug.Log( "inventory full" );
 		}

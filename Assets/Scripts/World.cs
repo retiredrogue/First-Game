@@ -19,6 +19,8 @@ public class World : MonoBehaviour {
 	public ChunkCoord playerChunkCoord;
 	private ChunkCoord playerLastChunkCoord;
 
+	public ItemEntity itemEntityPf;
+
 	public WorldData worldData;
 	public GameAssetsData gameAssetsData;
 
