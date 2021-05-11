@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b69a4b922fbbca428fcbddfd09a625d, type: 3}
+  m_Name: Glass
+  m_EditorClassIdentifier: 
+  id: 13
+  amount: 0
+  stackSize: 64
+  blockTypeInfo:
+    canWalkOn: 1
+    canPassThrough: 0
+    voxelStructure: {fileID: 11400000, guid: 0c4cc4bd30ab09b4e8106e31fc1926dd, type: 2}
+    isFluid: 0
+    isRotatable: 0
+    doesFall: 0
+    hardness: 3
+    opacityValue: 0
+    icon: {fileID: 8187439651284702066, guid: 72d9c2b36a03f1b4c8f983e33826e58b, type: 3}
+    frontFaceTexture: 49
+    topFaceTexture: 49
+    rightFaceTexture: 49
+    leftFaceTexture: 49
+    bottomFaceTexture: 49
+    backFaceTexture: 49

@@ -41,7 +41,7 @@ public class UIItemSlot : MonoBehaviour {
 
 	public void UpdateSlot() {
 		if ( itemSlot != null && itemSlot.HasItem ) {
-			slotIcon.sprite = world.worldData.blocks[ itemSlot.item.id ].icon;
+			slotIcon.sprite = world.worldData.items[ itemSlot.item.id ].blockTypeInfo.icon;
 			slotAmount.text = itemSlot.item.amount.ToString();
 			slotIcon.enabled = true;
 			slotAmount.enabled = true;
@@ -110,22 +110,14 @@ public class ItemSlot {
 	}
 
 	public int Add( int amt ) {
-		if ( amt == item.amount - item.maxStackSize ) {
-			item.amount = item.maxStackSize;
-			uiItemSlot.UpdateSlot();
-			return amt;
-		} else if ( amt < item.amount - item.maxStackSize ) {
-			item.amount += amt;
-			uiItemSlot.UpdateSlot();
-			return amt;
-		} else {
-			return amt;
-		}
+		item.amount += amt;
+		uiItemSlot.UpdateSlot();
+		return amt;
 	}
 
 	public ItemData TakeAll() {
 		ItemData handOver = ScriptableObject.CreateInstance<ItemData>();
-		handOver.id = item.id;
+		//handOver.id = item.id;
 		handOver.amount = item.amount;
 		EmptySlot();
 		return handOver;

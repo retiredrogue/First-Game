@@ -1253,6 +1253,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 060d6b1dd03944347be92e80c64d60db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1242563903 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3584697965013116003, guid: 460d2730b2b806d4eae110b380b4428a, type: 3}
+  m_PrefabInstance: {fileID: 875000052}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 060d6b1dd03944347be92e80c64d60db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1268532184
 GameObject:
   m_ObjectHideFlags: 0
@@ -1393,6 +1404,7 @@ MonoBehaviour:
   - {fileID: 1462315380}
   - {fileID: 1894952874}
   - {fileID: 1285568984}
+  - {fileID: 1242563903}
   highlight: {fileID: 1317572108}
   player: {fileID: 2092595641}
   slotIndex: 0
@@ -2123,23 +2135,21 @@ MonoBehaviour:
   player: {fileID: 2092595639}
   itemEntityPf: {fileID: 6584190646400225945, guid: 6e8cf0a16e8c14f4d9243e88290a80b2, type: 3}
   gameAssetsData:
-    blockTypes:
-    - {fileID: 11400000, guid: 633d3063714297c44b93a69343508d12, type: 2}
-    - {fileID: 11400000, guid: 187272887aa761e45babb25c9bf6375e, type: 2}
-    - {fileID: 11400000, guid: 2d9aeeb63c70bde4ea5b5ffcfec76504, type: 2}
-    - {fileID: 11400000, guid: 7c5985def4ce4fc448f4a218a51a5ecb, type: 2}
-    - {fileID: 11400000, guid: caec509b97d4c094b925a8b9cf3bd390, type: 2}
-    - {fileID: 11400000, guid: 3348afcb9bdc96a44925cde4f957ac49, type: 2}
-    - {fileID: 11400000, guid: 5170107eadbec7a40a93f4ff9b7b9405, type: 2}
-    - {fileID: 11400000, guid: 7174370a309edae4b802d845813cd8f4, type: 2}
-    - {fileID: 11400000, guid: f18c81b167ea06e48bc106caeb5ca01a, type: 2}
-    - {fileID: 11400000, guid: 3a791d8f284fc3c4792342c4a8e773af, type: 2}
-    - {fileID: 11400000, guid: 61cf0d345b075f94598c7a76b244f6db, type: 2}
-    - {fileID: 11400000, guid: 99da6e2a093c35e47943392c9ad6d44f, type: 2}
-    - {fileID: 11400000, guid: 8552006de8d46df44a55560676584d08, type: 2}
-    - {fileID: 11400000, guid: 6d7df66938cf4a745921d376e641ff33, type: 2}
-    - {fileID: 11400000, guid: f2618904a8c5bf84d842208cff8feca8, type: 2}
-    items: []
+    items:
+    - {fileID: 11400000, guid: a514435d568ae0b4aa9f65c376044dcb, type: 2}
+    - {fileID: 11400000, guid: d51f5bfe95fcfa4459879b1ce8260ee3, type: 2}
+    - {fileID: 11400000, guid: 634568aa9c5a7b942a16f6ea5aad175c, type: 2}
+    - {fileID: 11400000, guid: 91b359ffaf944b14fab1521ad9353127, type: 2}
+    - {fileID: 11400000, guid: 98244a5b7c1d72249af328a515dd1df8, type: 2}
+    - {fileID: 11400000, guid: b92d192438440954a890476361b3a391, type: 2}
+    - {fileID: 11400000, guid: c8286b847dd59d641b4aff56371d5008, type: 2}
+    - {fileID: 11400000, guid: 331000cf6d2ad714eb58ed48cb4abfce, type: 2}
+    - {fileID: 11400000, guid: aaaf323612d8eb247902985055e2f719, type: 2}
+    - {fileID: 11400000, guid: a0f226f704a06704fa74ffa3a54308b9, type: 2}
+    - {fileID: 11400000, guid: 223825d101ded374997c18a11384ea9e, type: 2}
+    - {fileID: 11400000, guid: 0538bbacef0dd064d97dccaa04a9427d, type: 2}
+    - {fileID: 11400000, guid: d7f3067de6f29c34aba4896449ac0e9f, type: 2}
+    - {fileID: 11400000, guid: 904f663a181c1bd4a9b59c6cca23c17d, type: 2}
     biomes:
     - {fileID: 11400000, guid: abe606f12e452fa4fab6ad3fe393f6ff, type: 2}
     - {fileID: 11400000, guid: 3fdb74e2721df7342ae58e155b93e3ab, type: 2}

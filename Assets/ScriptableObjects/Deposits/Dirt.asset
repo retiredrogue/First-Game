@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ab6f11c1984370419b025096793b7f6, type: 3}
   m_Name: Dirt
   m_EditorClassIdentifier: 
-  blockID: 8
+  blockID: 3
   height: {x: 1, y: 255}
   noiseScale: 0.1
   noiseThreshold: 0.5

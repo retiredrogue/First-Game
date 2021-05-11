@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ab6f11c1984370419b025096793b7f6, type: 3}
   m_Name: Sand
   m_EditorClassIdentifier: 
-  blockID: 14
+  blockID: 5
   height: {x: 30, y: 60}
   noiseScale: 0.2
   noiseThreshold: 0.6

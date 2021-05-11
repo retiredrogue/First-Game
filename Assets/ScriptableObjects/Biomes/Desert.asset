@@ -16,8 +16,8 @@ MonoBehaviour:
   nosieScale: 0.058
   terrainHeight: 10
   terrainScale: 0.05
-  surfaceBlock: 14
-  subSurfaceBlock: 13
+  surfaceBlock: 5
+  subSurfaceBlock: 6
   majorFloraIndex: 1
   majorFloraZoneScale: 1.06
   majorFloraZoneThreshold: 0.75

@@ -35,7 +35,7 @@ public class VoxelData {
 	}
 
 	public BlockData Properties {
-		get { return World.Instance.worldData.blocks[ id ]; }
+		get { return World.Instance.worldData.items[ id ].blockTypeInfo; }
 	}
 
 	public byte Light {

@@ -29,7 +29,7 @@ public class ChunkData {
 			for ( int y = 0; y < WorldData.chunkHeight; y++ ) {
 				for ( int z = 0; z < WorldData.chunkWidth; z++ ) {
 					Vector3 voxelPosition = new Vector3( x + GPosition.x, y, z + GPosition.y );
-					VoxelData voxel = voxelMap[ x, y, z ] = new VoxelData( World.Instance.GenVoxelData( voxelPosition ), this, new Vector3Int( x, y, z ) );
+					VoxelData voxel = voxelMap[ x, y, z ] = new VoxelData( World.Instance.GenBlockData( voxelPosition ), this, new Vector3Int( x, y, z ) );
 
 					for ( int i = 0; i < 6; i++ ) {
 						Vector3Int neighbourPosition = voxel.GPosition + voxel.faceCheck[ i ];

@@ -27,16 +27,16 @@ public static class Structures {
 
 		// generate trunk
 		for ( int i = 1; i < height; i++ )
-			queue.Enqueue( new VoxelMod( new Vector3( gPosition.x, gPosition.y + i, gPosition.z ), 12 ) );
+			queue.Enqueue( new VoxelMod( new Vector3( gPosition.x, gPosition.y + i, gPosition.z ), 7 ) );
 
 		//generate tree top
 		for ( int y = -2; y < 4; y++ ) {
 			for ( int x = -2; x < 3; x++ ) {
 				for ( int z = -2; z < 3; z++ ) {
 					Vector3 pos = new Vector3( gPosition.x + x, gPosition.y + height + y, gPosition.z + z );
-					byte voxelID = World.Instance.GenVoxelData( pos );
+					byte voxelID = World.Instance.GenBlockData( pos );
 					if ( voxelID == 0 )
-						queue.Enqueue( new VoxelMod( pos, 11 ) );
+						queue.Enqueue( new VoxelMod( pos, 8 ) );
 				}
 			}
 		}
@@ -53,10 +53,7 @@ public static class Structures {
 			height = minStemHeight;
 
 		for ( int i = 1; i <= height; i++ ) {
-			if ( i == height )
-				queue.Enqueue( new VoxelMod( new Vector3( gPosition.x, gPosition.y + i, gPosition.z ), 5 ) );
-			else
-				queue.Enqueue( new VoxelMod( new Vector3( gPosition.x, gPosition.y + i, gPosition.z ), 6 ) );
+			queue.Enqueue( new VoxelMod( new Vector3( gPosition.x, gPosition.y + i, gPosition.z ), 9 ) );
 		}
 		return queue;
 	}

@@ -11,7 +11,7 @@ public class WorldData {
 	public static int worldSizeInChunks = 10;
 	public static int terrainHeight = chunkHeight / 2;
 
-	public BlockData[] blocks;
+	public ItemData[] items;
 	public Biome[] biomes;
 	public Material[] materials;
 
@@ -67,7 +67,7 @@ public class WorldData {
 	}
 
 	public void GetAssets() {
-		blocks = World.Instance.gameAssetsData.blockTypes;
+		items = World.Instance.gameAssetsData.items;
 		biomes = World.Instance.gameAssetsData.biomes;
 		materials = World.Instance.gameAssetsData.materials;
 	}
@@ -145,7 +145,7 @@ public class WorldData {
 
 	public bool CheckForVoxel( Vector3 voxelgPosition ) {
 		VoxelData voxel = GetVoxelData( voxelgPosition );
-		return ( voxel != null && blocks[ voxel.id ].canWalkOn );
+		return ( voxel != null && items[ voxel.id ].blockTypeInfo.canWalkOn );
 	}
 
 	public void EditVoxel( Vector3 voxelgPosition, byte newID, int orientation ) {

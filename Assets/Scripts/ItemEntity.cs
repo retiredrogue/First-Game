@@ -43,7 +43,7 @@ public class ItemEntity : MonoBehaviour {
 
 	private void MakeDroppedBlockMesh() {
 		ClearMeshData();
-		BlockData voxel = World.Instance.worldData.blocks[ blockID ];
+		BlockData voxel = World.Instance.worldData.items[ blockID ].blockTypeInfo;
 
 		for ( int i = 0; i < 6; i++ ) {
 			int faceVertCount = 0;
@@ -105,31 +105,26 @@ public class ItemEntity : MonoBehaviour {
 			//tool bar check
 			for ( int i = 0; i < player.toolBar.slots.Length; i++ ) {
 				UIItemSlot slot = player.toolBar.slots[ i ];
-				if ( slot.HasItem ) {
-					Debug.Log( " slot block ID: " + slot.itemSlot.item.id + " block ID: " + blockID );
+				if ( slot.HasItem && slot.itemSlot.item.id == blockID &&
+						 slot.itemSlot.item.amount < slot.itemSlot.item.StackSize ) {
+					player.toolBar.slots[ i ].itemSlot.Add( 1 );
 
-					if ( slot.itemSlot.item.id == blockID )
-						Debug.Log( "hi" );
-					if ( slot.itemSlot.item.amount < slot.itemSlot.item.maxStackSize ) {
-						Debug.Log( "toolBar Slot " + i + ": added" );
-						player.toolBar.slots[ i ].itemSlot.Add( 1 );
-						Destroy( gameObject );
-					}
+					Destroy( gameObject );
+					return;
 				}
 			}
+
 			Debug.Log( "toolBar Slot has no equillalent item" );
 
 			//inventory check
 			for ( int i = 0; i < player.inventory.slots.Length; i++ ) {
 				UIItemSlot slot = player.inventory.slots[ i ];
-				if ( slot.HasItem ) {
-					Debug.Log( " slot block ID: " + slot.itemSlot.item.id + " block ID: " + blockID );
-					if ( player.inventory.slots[ i ].itemSlot.item.id == blockID && slot.itemSlot.item.amount < slot.itemSlot.item.maxStackSize ) {
-						Debug.Log( "inventory Slot " + i + ": added" );
+				if ( slot.HasItem && slot.itemSlot.item.id == blockID &&
+						 slot.itemSlot.item.amount < slot.itemSlot.item.StackSize ) {
+					player.inventory.slots[ i ].itemSlot.Add( 1 );
 
-						player.inventory.slots[ i ].itemSlot.Add( 1 );
-						Destroy( gameObject );
-					}
+					Destroy( gameObject );
+					return;
 				}
 			}
 			Debug.Log( "inventory Slot has no equillalent item" );
@@ -141,6 +136,7 @@ public class ItemEntity : MonoBehaviour {
 				player.inventory.emptySlots[ player.inventory.emptySlots.Count - 1 ].itemSlot.Add( 1 );
 				player.inventory.emptySlots.RemoveAt( player.inventory.emptySlots.Count - 1 );
 				Destroy( gameObject );
+				return;
 			} else // No room for item
 				Debug.Log( "inventory full" );
 		}
