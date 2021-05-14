@@ -130,11 +130,10 @@ public class ItemEntity : MonoBehaviour {
 			if ( player.inventory.emptySlots.Count != 0 ) {
 				string lastEmptySlotName = player.inventory.emptySlots[ player.inventory.emptySlots.Count - 1 ].name;
 				Debug.Log( lastEmptySlotName );
-
-				foreach ( UIItemSlot s in player.inventory.slots ) {
-					if ( s.name == lastEmptySlotName ) {
+				for ( int i = 0; i < player.inventory.slots.Length; i++ ) {
+					if ( player.inventory.slots[ i ].name == lastEmptySlotName ) {
 						Debug.Log( "found slot" );
-						s.itemSlot.Add( 1 );
+						player.inventory.slots[ i ].itemSlot.Add( 1 );
 						Debug.Log( "added to slot" );
 					}
 				}

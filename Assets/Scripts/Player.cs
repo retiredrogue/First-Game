@@ -63,11 +63,15 @@ public class Player : MonoBehaviour {
 	}
 
 	private void Start() {
+		inventoryWindow.transform.localScale = Vector3.zero;
+
 		world = GameObject.Find( "World" ).GetComponent<World>();
 		controller = GetComponent<CharacterController>();
 		cam = Camera.main.transform;
+
 		moveSpeed = walkSpeed;
 		sprintSpeed = walkSpeed * 1.5f;
+
 		Cursor.lockState = CursorLockMode.Locked;
 
 		mouseSensitivity = 15;
