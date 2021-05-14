@@ -32,13 +32,35 @@ public class Player : MonoBehaviour {
 
 	public Inventory inventory;
 
-	public bool inUI = false;
-
 	public ToolBar toolBar;
 
 	public float reach = 8;
 
 	public GameObject blockHighLight;
+
+	private bool _inUI = false;
+
+	public GameObject inventoryWindow;
+	public GameObject cursorSlot;
+
+	public bool InUI {
+		get { return _inUI; }
+
+		set {
+			_inUI = value;
+			if ( _inUI ) {
+				Cursor.lockState = CursorLockMode.None;
+				Cursor.visible = true;
+				inventoryWindow.transform.localScale = Vector3.one;
+				cursorSlot.SetActive( true );
+			} else {
+				Cursor.lockState = CursorLockMode.Locked;
+				Cursor.visible = false;
+				inventoryWindow.transform.localScale = Vector3.zero;
+				cursorSlot.SetActive( false );
+			}
+		}
+	}
 
 	private void Start() {
 		world = GameObject.Find( "World" ).GetComponent<World>();
@@ -52,7 +74,7 @@ public class Player : MonoBehaviour {
 	}
 
 	private void FixedUpdate() {
-		if ( !inUI )
+		if ( !InUI )
 			CalculateVelocity();
 		if ( world.isWorldLoaded )
 			SetGravity();
@@ -60,11 +82,9 @@ public class Player : MonoBehaviour {
 
 	private void Update() {
 		if ( Input.GetKeyDown( KeyCode.E ) ) {
-			inUI = !inUI;
-			inventory.gameObject.SetActive( inUI );
-			Cursor.lockState = CursorLockMode.None;
+			InUI = !InUI;
 		}
-		if ( !inUI ) {
+		if ( !InUI ) {
 			GetPlayerInputs();
 			CalculateVelocity();
 			PlayerView();

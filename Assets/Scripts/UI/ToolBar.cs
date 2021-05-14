@@ -8,16 +8,6 @@ public class ToolBar : MonoBehaviour {
 	public Player player;
 	public int slotIndex = 0;
 
-	private void Start() {
-		byte index = 1;
-		foreach ( UIItemSlot s in slots ) {
-			ItemData item = World.Instance.gameAssetsData.items[ index ];
-			item.amount = Random.Range( 2, 65 );
-			ItemSlot slot = new ItemSlot( s, item );
-			index++;
-		}
-	}
-
 	private void Update() {
 		float scroll = Input.GetAxis( "Mouse ScrollWheel" );
 

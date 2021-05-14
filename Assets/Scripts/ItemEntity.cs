@@ -114,8 +114,6 @@ public class ItemEntity : MonoBehaviour {
 				}
 			}
 
-			Debug.Log( "toolBar Slot has no equillalent item" );
-
 			//inventory check
 			for ( int i = 0; i < player.inventory.slots.Length; i++ ) {
 				UIItemSlot slot = player.inventory.slots[ i ];
@@ -127,18 +125,23 @@ public class ItemEntity : MonoBehaviour {
 					return;
 				}
 			}
-			Debug.Log( "inventory Slot has no equillalent item" );
 
-			// no item previouns item found add to last empty slot
+			// no previouns item found add to last empty slot
 			if ( player.inventory.emptySlots.Count != 0 ) {
-				Debug.Log( "item added to last inventory Slot" );
+				string lastEmptySlotName = player.inventory.emptySlots[ player.inventory.emptySlots.Count - 1 ].name;
+				Debug.Log( lastEmptySlotName );
 
-				player.inventory.emptySlots[ player.inventory.emptySlots.Count - 1 ].itemSlot.Add( 1 );
-				player.inventory.emptySlots.RemoveAt( player.inventory.emptySlots.Count - 1 );
+				foreach ( UIItemSlot s in player.inventory.slots ) {
+					if ( s.name == lastEmptySlotName ) {
+						Debug.Log( "found slot" );
+						s.itemSlot.Add( 1 );
+						Debug.Log( "added to slot" );
+					}
+				}
+
 				Destroy( gameObject );
 				return;
-			} else // No room for item
-				Debug.Log( "inventory full" );
+			}
 		}
 	}
 }
