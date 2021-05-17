@@ -57,7 +57,7 @@ public class ChunkData {
 		}
 	}
 
-	public void ModifyVoxel( Vector3Int voxelChunkPosition, byte _id, int orientation ) {
+	public void ModifyVoxel( Vector3Int voxelChunkPosition, byte _id, Vector3 rotation ) {
 		if ( voxelMap[ voxelChunkPosition.x, voxelChunkPosition.y, voxelChunkPosition.z ].id == _id )
 			return;
 
@@ -67,7 +67,8 @@ public class ChunkData {
 		byte oldOpacity = voxel.Properties.opacityValue;
 
 		voxel.id = _id;
-		//voxel.orientation = orientation;
+		if ( voxel.Properties.isRotatable )
+			voxel.Properties.RotateFaces( rotation );
 
 		if ( voxel.Properties.opacityValue != oldOpacity &&
 			( voxelChunkPosition.y == WorldData.chunkHeight - 1 || voxelMap[ voxelChunkPosition.x, voxelChunkPosition.y + 1, voxelChunkPosition.z ].Light == 15 ) ) {

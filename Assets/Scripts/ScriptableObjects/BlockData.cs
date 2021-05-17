@@ -28,6 +28,10 @@ public class BlockData {
 	public int bottomFaceTexture;
 	public int backFaceTexture;
 
+	public void RotateFaces( Vector3 otherFaceNormal ) {
+		Debug.Log( otherFaceNormal );
+	}
+
 	// Front, Top, Right, Left,  Bottom, Back
 	public int GetVoxelFace( int faceIndex ) {
 		switch ( faceIndex ) {

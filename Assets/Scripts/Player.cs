@@ -5,7 +5,7 @@ public class Player : MonoBehaviour {
 
 	private Transform cam;
 	private World world;
-	public int orientation;
+	public Vector3 playerOrientation;
 
 	[Tooltip( "x: max,y: min" )]
 	public Vector2 jumpHeight;
@@ -99,16 +99,17 @@ public class Player : MonoBehaviour {
 			controller.Move( velocity * Time.deltaTime );
 			Cursor.lockState = CursorLockMode.Locked;
 		}
-		//Vector3 XZDirection = transform.forward;
-		//XZDirection.y = 0;
-		//if ( Vector3.Angle( XZDirection, Vector3.forward ) <= 45 )
-		//	orientation = 0; // Player is facing forwards.
-		//else if ( Vector3.Angle( XZDirection, Vector3.right ) <= 45 )
-		//	orientation = 2;
-		//else if ( Vector3.Angle( XZDirection, Vector3.back ) <= 45 )
-		//	orientation = 5;
+		playerOrientation = transform.rotation.eulerAngles / 90;
+		//Vector3 compassDirection = transform.forward;
+		//compassDirection.y = 0;
+		//if ( Vector3.Angle( compassDirection, Vector3.forward ) <= 45 )
+		//	orientation = 0; // Player is facing north
+		//else if ( Vector3.Angle( compassDirection, Vector3.right ) <= 45 )
+		//	orientation = 2; // player facing east
+		//else if ( Vector3.Angle( compassDirection, Vector3.back ) <= 45 )
+		//	orientation = 5; // player facing south
 		//else
-		//	orientation = 3;
+		//	orientation = 3; // player facing west
 	}
 
 	private void CalculateVelocity() {
@@ -186,7 +187,7 @@ public class Player : MonoBehaviour {
 
 			Instantiate( newItemEntity );
 
-			World.Instance.worldData.EditVoxel( voxelgPosition, 0/*air block*/ );
+			World.Instance.worldData.EditVoxel( voxelgPosition, 0/*air block*/ , Vector3.zero );
 		}
 	}
 
@@ -194,8 +195,9 @@ public class Player : MonoBehaviour {
 		if ( Physics.Raycast( cam.position, cam.forward * reach, out RaycastHit hit, reach, targetBlock ) ) {
 			if ( toolBar.slots[ toolBar.slotIndex ].HasItem ) {
 				Vector3 newVoxelPos = highLightPosition + hit.normal;
-				World.Instance.worldData.EditVoxel( newVoxelPos, toolBar.slots[ toolBar.slotIndex ].itemSlot.item.id );
+				World.Instance.worldData.EditVoxel( newVoxelPos, toolBar.slots[ toolBar.slotIndex ].itemSlot.item.id, Vector3.zero );
 				toolBar.slots[ toolBar.slotIndex ].itemSlot.Take( 1 );
+				Debug.Log( playerOrientation );
 			}
 		}
 	}

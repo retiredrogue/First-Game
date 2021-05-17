@@ -123,7 +123,7 @@ public class World : MonoBehaviour {
 			while ( queue.Count > 0 ) {
 				VoxelMod v = queue.Dequeue();
 
-				worldData.SetVoxel( v.position, v.id, 1 );
+				worldData.SetVoxel( v.position, v.id, Vector3.zero );
 			}
 		}
 
@@ -247,13 +247,13 @@ public class World : MonoBehaviour {
 
 		/* TREE PASS */
 
-		if ( yPos == terrainHeight && biome.placeMajorFlora ) {
-			if ( Noise.Get2DPerlin( new Vector2( globalPos.x, globalPos.z ), 0, biome.majorFloraZoneScale ) > biome.majorFloraZoneThreshold ) {
-				if ( Noise.Get2DPerlin( new Vector2( globalPos.x, globalPos.z ), 0, biome.majorFloraPlacementScale ) > biome.majorFloraPlacementThreshold ) {
-					modifications.Enqueue( Structures.GenerateMajorFlora( biome.majorFloraIndex, globalPos, biome.height.x, biome.height.y ) );
-				}
-			}
-		}
+		//if ( yPos == terrainHeight && biome.placeMajorFlora ) {
+		//	if ( Noise.Get2DPerlin( new Vector2( globalPos.x, globalPos.z ), 0, biome.majorFloraZoneScale ) > biome.majorFloraZoneThreshold ) {
+		//		if ( Noise.Get2DPerlin( new Vector2( globalPos.x, globalPos.z ), 0, biome.majorFloraPlacementScale ) > biome.majorFloraPlacementThreshold ) {
+		//			modifications.Enqueue( Structures.GenerateMajorFlora( biome.majorFloraIndex, globalPos, biome.height.x, biome.height.y ) );
+		//		}
+		//	}
+		//}
 
 		return voxelID;
 	}

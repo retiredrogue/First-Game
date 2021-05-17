@@ -62,7 +62,7 @@ public class Chunk {
 				for ( int z = 0; z < WorldData.chunkWidth; z++ ) {
 					VoxelData voxel = chunkData.voxelMap[ x, y, z ];
 					if ( World.Instance.worldData.items[ voxel.id ].blockTypeInfo.canWalkOn )
-						UpdateVoxelMeshData( voxel.lPosition );
+						UpdateVoxelMeshData( voxel.locPosition );
 				}
 			}
 		}

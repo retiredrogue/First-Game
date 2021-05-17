@@ -66,8 +66,6 @@ public class ItemSlot {
 	public ItemData item = null;
 	private UIItemSlot uiItemSlot = null;
 
-	public bool isCreative;
-
 	public ItemSlot( UIItemSlot _uiItemSlot ) {
 		item = null;
 		uiItemSlot = _uiItemSlot;

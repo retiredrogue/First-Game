@@ -8,7 +8,7 @@ public class VoxelData {
 
 	public ChunkData chunkData;
 	public VoxelNeighbours neighbours;
-	public Vector3Int lPosition;
+	public Vector3Int locPosition;
 
 	public Vector3Int[] faceCheck ={
 		Vector3Int.forward,	// 0 Front
@@ -23,13 +23,13 @@ public class VoxelData {
 
 	public Vector3Int GPosition {
 		get {
-			return new Vector3Int( lPosition.x + chunkData.GPosition.x, lPosition.y, lPosition.z + chunkData.GPosition.y );
+			return new Vector3Int( locPosition.x + chunkData.GPosition.x, locPosition.y, locPosition.z + chunkData.GPosition.y );
 		}
 	}
 
 	public VoxelData( byte _id, ChunkData _chunkData, Vector3Int _localPosition ) {
 		id = _id;
-		lPosition = _localPosition;
+		locPosition = _localPosition;
 		chunkData = _chunkData;
 		neighbours = new VoxelNeighbours( this );
 	}

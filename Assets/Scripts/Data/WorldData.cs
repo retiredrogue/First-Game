@@ -131,7 +131,7 @@ public class WorldData {
 
 	public Vector3Int VoxelPositionInChunk( Vector3 voxelPosition ) => new Vector3Int( ( int )voxelPosition.x % chunkWidth, ( int )voxelPosition.y, ( int )voxelPosition.z % chunkWidth );
 
-	public void SetVoxel( Vector3 voxelgPosition, byte voxelID, int orientation ) {
+	public void SetVoxel( Vector3 voxelgPosition, byte voxelID, Vector3 rotation ) {
 		if ( !IsVoxelInWorld( voxelgPosition ) )
 			return;
 
@@ -140,7 +140,7 @@ public class WorldData {
 		// voxel position in chunk via a remainder should be 0 - 15
 		Vector3Int voxel = VoxelPositionInChunk( voxelgPosition );
 
-		chunk.ModifyVoxel( voxel, voxelID, orientation );
+		chunk.ModifyVoxel( voxel, voxelID, rotation );
 	}
 
 	public bool CheckForVoxel( Vector3 voxelgPosition ) {
@@ -148,21 +148,21 @@ public class WorldData {
 		return ( voxel != null && items[ voxel.id ].blockTypeInfo.canWalkOn );
 	}
 
-	public void EditVoxel( Vector3 voxelgPosition, byte newID, int orientation ) {
+	public void EditVoxel( Vector3 voxelgPosition, byte newID, Vector3 rotation ) {
 		Vector3Int voxel = VoxelPositionInChunk( voxelgPosition );
 		ChunkData chunkData = RequestChunkData( GetChunkCoord( voxelgPosition ), false );
 
-		chunkData.ModifyVoxel( voxel, newID, orientation );
+		chunkData.ModifyVoxel( voxel, newID, rotation );
 
 		chunkData.UpdateSurroundingVoxels( voxel );
 	}
 
-	public void EditVoxel( Vector3 voxelgPosition, byte newID ) {
-		Vector3Int voxel = VoxelPositionInChunk( voxelgPosition );
-		ChunkData chunkData = RequestChunkData( GetChunkCoord( voxelgPosition ), false );
+	//public void EditVoxel( Vector3 voxelgPosition, byte newID ) {
+	//	Vector3Int voxel = VoxelPositionInChunk( voxelgPosition );
+	//	ChunkData chunkData = RequestChunkData( GetChunkCoord( voxelgPosition ), false );
 
-		chunkData.ModifyVoxel( voxel, newID, 0 );
+	//	chunkData.ModifyVoxel( voxel, newID, 0 );
 
-		chunkData.UpdateSurroundingVoxels( voxel );
-	}
+	//	chunkData.UpdateSurroundingVoxels( voxel );
+	//}
 }
