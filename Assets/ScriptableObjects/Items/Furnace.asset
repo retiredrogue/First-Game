@@ -13,8 +13,9 @@ MonoBehaviour:
   m_Name: Furnace
   m_EditorClassIdentifier: 
   id: 12
-  amount: 0
-  stackSize: 64
+  spriteIcon: {fileID: 2451039869929847667, guid: 72d9c2b36a03f1b4c8f983e33826e58b, type: 3}
+  amount: 15
+  maxStackSize: 0
   blockTypeInfo:
     canWalkOn: 1
     canPassThrough: 0
@@ -24,7 +25,6 @@ MonoBehaviour:
     doesFall: 0
     hardness: 6
     opacityValue: 15
-    icon: {fileID: 2451039869929847667, guid: 72d9c2b36a03f1b4c8f983e33826e58b, type: 3}
     frontFaceTexture: 44
     topFaceTexture: 62
     rightFaceTexture: 45

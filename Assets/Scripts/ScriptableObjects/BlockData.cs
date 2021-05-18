@@ -17,8 +17,6 @@ public class BlockData {
 	[Range( 0, 15 ), Tooltip( "15 is solid, 0 clear like glass" )]
 	public byte opacityValue;
 
-	public Sprite icon;
-
 	[Header( "Texture Values" )]
 	public int frontFaceTexture;
 

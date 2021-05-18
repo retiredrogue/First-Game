@@ -13,8 +13,9 @@ MonoBehaviour:
   m_Name: CobbleStone
   m_EditorClassIdentifier: 
   id: 11
-  amount: 0
-  stackSize: 64
+  spriteIcon: {fileID: -7538633921802359561, guid: 72d9c2b36a03f1b4c8f983e33826e58b, type: 3}
+  amount: 42
+  maxStackSize: 0
   blockTypeInfo:
     canWalkOn: 1
     canPassThrough: 0
@@ -24,7 +25,6 @@ MonoBehaviour:
     doesFall: 0
     hardness: 4
     opacityValue: 15
-    icon: {fileID: -7538633921802359561, guid: 72d9c2b36a03f1b4c8f983e33826e58b, type: 3}
     frontFaceTexture: 16
     topFaceTexture: 16
     rightFaceTexture: 16

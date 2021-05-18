@@ -13,8 +13,9 @@ MonoBehaviour:
   m_Name: Cactus
   m_EditorClassIdentifier: 
   id: 9
-  amount: 0
-  stackSize: 64
+  spriteIcon: {fileID: 4505631756656361831, guid: 72d9c2b36a03f1b4c8f983e33826e58b, type: 3}
+  amount: 3
+  maxStackSize: 0
   blockTypeInfo:
     canWalkOn: 1
     canPassThrough: 0
@@ -24,7 +25,6 @@ MonoBehaviour:
     doesFall: 0
     hardness: 2
     opacityValue: 15
-    icon: {fileID: 4505631756656361831, guid: 72d9c2b36a03f1b4c8f983e33826e58b, type: 3}
     frontFaceTexture: 70
     topFaceTexture: 71
     rightFaceTexture: 70

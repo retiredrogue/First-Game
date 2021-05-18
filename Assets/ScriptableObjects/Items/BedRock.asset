@@ -13,8 +13,9 @@ MonoBehaviour:
   m_Name: BedRock
   m_EditorClassIdentifier: 
   id: 1
-  amount: 0
-  stackSize: 64
+  spriteIcon: {fileID: -1501523072523359806, guid: 72d9c2b36a03f1b4c8f983e33826e58b, type: 3}
+  amount: 24
+  maxStackSize: 0
   blockTypeInfo:
     canWalkOn: 1
     canPassThrough: 0
@@ -24,7 +25,6 @@ MonoBehaviour:
     doesFall: 0
     hardness: 15
     opacityValue: 15
-    icon: {fileID: -1501523072523359806, guid: 72d9c2b36a03f1b4c8f983e33826e58b, type: 3}
     frontFaceTexture: 17
     topFaceTexture: 17
     rightFaceTexture: 17

@@ -13,8 +13,9 @@ MonoBehaviour:
   m_Name: Dirt
   m_EditorClassIdentifier: 
   id: 3
-  amount: 0
-  stackSize: 64
+  spriteIcon: {fileID: -6943373833598557, guid: 72d9c2b36a03f1b4c8f983e33826e58b, type: 3}
+  amount: 14
+  maxStackSize: 0
   blockTypeInfo:
     canWalkOn: 1
     canPassThrough: 0
@@ -24,7 +25,6 @@ MonoBehaviour:
     doesFall: 0
     hardness: 2
     opacityValue: 15
-    icon: {fileID: -3169788494295363670, guid: 72d9c2b36a03f1b4c8f983e33826e58b, type: 3}
     frontFaceTexture: 2
     topFaceTexture: 2
     rightFaceTexture: 2

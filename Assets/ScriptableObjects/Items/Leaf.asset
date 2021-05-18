@@ -13,8 +13,9 @@ MonoBehaviour:
   m_Name: Leaf
   m_EditorClassIdentifier: 
   id: 8
-  amount: 0
-  stackSize: 64
+  spriteIcon: {fileID: 289541532373216470, guid: 72d9c2b36a03f1b4c8f983e33826e58b, type: 3}
+  amount: 15
+  maxStackSize: 0
   blockTypeInfo:
     canWalkOn: 1
     canPassThrough: 0
@@ -24,7 +25,6 @@ MonoBehaviour:
     doesFall: 0
     hardness: 1
     opacityValue: 7
-    icon: {fileID: 289541532373216470, guid: 72d9c2b36a03f1b4c8f983e33826e58b, type: 3}
     frontFaceTexture: 52
     topFaceTexture: 52
     rightFaceTexture: 52

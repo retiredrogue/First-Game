@@ -20,13 +20,12 @@ public class Inventory : MonoBehaviour {
 		}
 	}
 
-	private void Update() {
-		foreach ( UIItemSlot s in slots ) {
-			s.UpdateSlot();
-			if ( !s.HasItem && !emptySlots.Contains( s ) )
-				emptySlots.Add( s );
-			if ( s.HasItem && emptySlots.Contains( s ) )
-				emptySlots.Remove( s );
-		}
-	}
+	//private void Update() {
+	//	foreach ( UIItemSlot s in slots ) {
+	//		if ( !s.HasItem && !emptySlots.Contains( s ) )
+	//			emptySlots.Add( s );
+	//		if ( s.HasItem && emptySlots.Contains( s ) )
+	//			emptySlots.Remove( s );
+	//	}
+	//}
 }

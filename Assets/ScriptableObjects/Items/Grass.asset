@@ -13,8 +13,9 @@ MonoBehaviour:
   m_Name: Grass
   m_EditorClassIdentifier: 
   id: 4
-  amount: 38
-  stackSize: 64
+  spriteIcon: {fileID: 5392753449730437660, guid: 72d9c2b36a03f1b4c8f983e33826e58b, type: 3}
+  amount: 32
+  maxStackSize: 0
   blockTypeInfo:
     canWalkOn: 1
     canPassThrough: 0
@@ -24,7 +25,6 @@ MonoBehaviour:
     doesFall: 0
     hardness: 2
     opacityValue: 15
-    icon: {fileID: 5392753449730437660, guid: 72d9c2b36a03f1b4c8f983e33826e58b, type: 3}
     frontFaceTexture: 3
     topFaceTexture: 204
     rightFaceTexture: 3

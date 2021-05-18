@@ -11,12 +11,6 @@ public class UIItemSlot : MonoBehaviour {
 	public Image slotIcon;
 	public TextMeshProUGUI slotAmount;
 
-	private World world;
-
-	private void Awake() {
-		world = GameObject.Find( "World" ).GetComponent<World>();
-	}
-
 	public bool HasItem {
 		get {
 			if ( itemSlot == null )
@@ -30,18 +24,21 @@ public class UIItemSlot : MonoBehaviour {
 		itemSlot = _itemSlot;
 		isLinked = true;
 		itemSlot.LinkUISlot( this );
-		UpdateSlot();
+		UpdateSlot( itemSlot.item );
 	}
 
 	public void UnLink() {
 		itemSlot.UnLinkUISlot();
 		itemSlot = null;
-		UpdateSlot();
+		UpdateSlot( null );
 	}
 
-	public void UpdateSlot() {
+	public void UpdateSlot( ItemData item ) {
 		if ( itemSlot != null && itemSlot.HasItem ) {
-			slotIcon.sprite = world.worldData.items[ itemSlot.item.id ].blockTypeInfo.icon;
+			Debug.Log( item.id );
+			//slotIcon.sprite = World.Instance.gameAssetsData.items[ itemSlot.item.id ].spriteIcon;
+			slotIcon.sprite = item.spriteIcon;
+			//slotAmount.text = World.Instance.gameAssetsData.items[ itemSlot.item.id ].amount.ToString();
 			slotAmount.text = itemSlot.item.amount.ToString();
 			slotIcon.enabled = true;
 			slotAmount.enabled = true;
@@ -89,7 +86,7 @@ public class ItemSlot {
 	public void EmptySlot() {
 		item = null;
 		if ( uiItemSlot != null )
-			uiItemSlot.UpdateSlot();
+			uiItemSlot.UpdateSlot( item );
 	}
 
 	public int Take( int amt ) {
@@ -99,7 +96,7 @@ public class ItemSlot {
 			return _amt;
 		} else if ( amt < item.amount ) {
 			item.amount -= amt;
-			uiItemSlot.UpdateSlot();
+			uiItemSlot.UpdateSlot( item );
 			return amt;
 		} else {
 			EmptySlot();
@@ -109,7 +106,7 @@ public class ItemSlot {
 
 	public int Add( int amt ) {
 		item.amount += amt;
-		uiItemSlot.UpdateSlot();
+		uiItemSlot.UpdateSlot( item );
 		return amt;
 	}
 
@@ -123,7 +120,7 @@ public class ItemSlot {
 
 	public void InsertStack( ItemData _item ) {
 		item = _item;
-		uiItemSlot.UpdateSlot();
+		uiItemSlot.UpdateSlot( item );
 	}
 
 	public bool HasItem {
