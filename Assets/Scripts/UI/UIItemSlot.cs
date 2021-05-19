@@ -5,32 +5,24 @@ using UnityEngine.UI;
 using TMPro;
 
 public class UIItemSlot : MonoBehaviour {
-	public bool isLinked = false;
 	public ItemSlot itemSlot;
 	public Image slotImage;
 	public Image slotIcon;
 	public TextMeshProUGUI slotAmount;
 
-	public bool HasItem {
+	public bool HasItemInSlot {
 		get {
-			if ( itemSlot == null )
-				return false;
-			else
+			if ( itemSlot != null )
 				return itemSlot.HasItem;
+			else
+				return false;
 		}
 	}
 
 	public void Link( ItemSlot _itemSlot ) {
 		itemSlot = _itemSlot;
-		isLinked = true;
-		itemSlot.LinkUISlot( this );
-		UpdateSlot( itemSlot.item );
-	}
 
-	public void UnLink() {
-		itemSlot.UnLinkUISlot();
-		itemSlot = null;
-		UpdateSlot( null );
+		UpdateSlot( itemSlot.item );
 	}
 
 	public void UpdateSlot( ItemData item ) {
@@ -52,11 +44,6 @@ public class UIItemSlot : MonoBehaviour {
 		slotIcon.enabled = false;
 		slotAmount.enabled = false;
 	}
-
-	private void OnDestroy() {
-		if ( itemSlot != null )
-			itemSlot.UnLinkUISlot();
-	}
 }
 
 public class ItemSlot {
@@ -73,14 +60,6 @@ public class ItemSlot {
 		item = _item;
 		uiItemSlot = _uiItemSlot;
 		uiItemSlot.Link( this );
-	}
-
-	public void LinkUISlot( UIItemSlot uiSlot ) {
-		uiItemSlot = uiSlot;
-	}
-
-	public void UnLinkUISlot() {
-		uiItemSlot = null;
 	}
 
 	public void EmptySlot() {

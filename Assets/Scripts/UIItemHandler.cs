@@ -35,7 +35,7 @@ public class UIItemHandler : MonoBehaviour {
 		if ( clickedSlot == null )
 			return;
 
-		if ( !cursorSlot.HasItem && !clickedSlot.HasItem )
+		if ( !cursorSlot.HasItemInSlot && !clickedSlot.HasItemInSlot )
 			return;
 
 		//if ( clickedSlot.itemSlot.isCreative ) {
@@ -43,17 +43,17 @@ public class UIItemHandler : MonoBehaviour {
 		//	cursorItemSlot.InsertStack( clickedSlot.itemSlot.item );
 		//}
 
-		if ( !cursorSlot.HasItem && clickedSlot.HasItem ) {
+		if ( !cursorSlot.HasItemInSlot && clickedSlot.HasItemInSlot ) {
 			cursorItemSlot.InsertStack( clickedSlot.itemSlot.TakeAll() );
 			return;
 		}
 
-		if ( cursorSlot.HasItem && !clickedSlot.HasItem ) {
+		if ( cursorSlot.HasItemInSlot && !clickedSlot.HasItemInSlot ) {
 			clickedSlot.itemSlot.InsertStack( cursorItemSlot.TakeAll() );
 			return;
 		}
 
-		if ( cursorSlot.HasItem && clickedSlot.HasItem ) {
+		if ( cursorSlot.HasItemInSlot && clickedSlot.HasItemInSlot ) {
 			if ( cursorSlot.itemSlot.item.id != clickedSlot.itemSlot.item.id ) {
 				ItemData oldCursorSlot = cursorSlot.itemSlot.TakeAll();
 				ItemData oldSlot = clickedSlot.itemSlot.TakeAll();

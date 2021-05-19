@@ -105,7 +105,7 @@ public class ItemEntity : MonoBehaviour {
 			//tool bar check
 			for ( int i = 0; i < player.toolBar.slots.Length; i++ ) {
 				UIItemSlot slot = player.toolBar.slots[ i ];
-				if ( slot.HasItem && slot.itemSlot.item.id == blockID &&
+				if ( slot.HasItemInSlot && slot.itemSlot.item.id == blockID &&
 						 slot.itemSlot.item.amount < slot.itemSlot.item.StackSize ) {
 					player.toolBar.slots[ i ].itemSlot.Add( 1 );
 
@@ -117,7 +117,7 @@ public class ItemEntity : MonoBehaviour {
 			//inventory check
 			for ( int i = 0; i < player.inventory.slots.Length; i++ ) {
 				UIItemSlot slot = player.inventory.slots[ i ];
-				if ( slot.HasItem && slot.itemSlot.item.id == blockID &&
+				if ( slot.HasItemInSlot && slot.itemSlot.item.id == blockID &&
 						 slot.itemSlot.item.amount < slot.itemSlot.item.StackSize ) {
 					player.inventory.slots[ i ].itemSlot.Add( 1 );
 

@@ -193,7 +193,7 @@ public class Player : MonoBehaviour {
 
 	private void PlaceBlock( Vector3 highLightPosition ) {
 		if ( Physics.Raycast( cam.position, cam.forward * reach, out RaycastHit hit, reach, targetBlock ) ) {
-			if ( toolBar.slots[ toolBar.slotIndex ].HasItem ) {
+			if ( toolBar.slots[ toolBar.slotIndex ].HasItemInSlot ) {
 				Vector3 newVoxelPos = highLightPosition + hit.normal;
 				World.Instance.worldData.EditVoxel( newVoxelPos, toolBar.slots[ toolBar.slotIndex ].itemSlot.item.id, Vector3.zero );
 				toolBar.slots[ toolBar.slotIndex ].itemSlot.Take( 1 );

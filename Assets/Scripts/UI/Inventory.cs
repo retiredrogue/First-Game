@@ -8,15 +8,13 @@ public class Inventory : MonoBehaviour {
 	public List<UIItemSlot> emptySlots = new List<UIItemSlot>();
 
 	private void Start() {
-		byte index = 1;
-		foreach ( UIItemSlot s in slots ) {
-			ItemData item = World.Instance.gameAssetsData.items[ index ];
-			item.amount = Random.Range( 2, 65 );
-			ItemSlot slot = new ItemSlot( s, item );
-			if ( index < World.Instance.gameAssetsData.items.Length - 1 )
-				index++;
-			else
-				return;
+		for ( int i = 0; i < slots.Length; i++ ) {
+			if ( i < World.Instance.gameAssetsData.items.Length ) {
+				ItemData item = World.Instance.gameAssetsData.items[ i ];
+				item.amount = Random.Range( 2, 65 );
+				new ItemSlot( slots[ i ], item );
+			} else
+				new ItemSlot( slots[ i ] );
 		}
 	}
 
