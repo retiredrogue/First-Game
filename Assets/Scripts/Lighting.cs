@@ -21,11 +21,11 @@ public static class Lighting {
 		bool obstructed = false;
 
 		for ( int y = startY; y > -1; y-- ) {
-			VoxelData voxel = chunkData.voxelMap[ x, y, z ];
+			VoxelData voxel = chunkData.GetVoxelData( x, y, z );
 
 			if ( obstructed ) {
 				voxel.Light = 0;
-			} else if ( voxel.Properties.opacityValue > 0 ) {
+			} else if ( voxel.Properties.GetOpacity() > 0 ) {
 				voxel.Light = 0;
 				obstructed = true;
 			} else

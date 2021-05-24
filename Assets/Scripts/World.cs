@@ -19,10 +19,9 @@ public class World : MonoBehaviour {
 	public ChunkCoord playerChunkCoord;
 	private ChunkCoord playerLastChunkCoord;
 
-	public ItemEntity itemEntityPf;
+	public DroppedItem itemEntityPf;
 
 	public WorldData worldData;
-	public GameAssetsData gameAssetsData;
 
 	private readonly List<ChunkCoord> activeChunks = new List<ChunkCoord>();
 	private readonly List<Chunk> chunksToUpdate = new List<Chunk>();
@@ -42,7 +41,7 @@ public class World : MonoBehaviour {
 		else
 			_instance = this;
 
-		worldData = new WorldData( gameAssetsData.worldName, gameAssetsData.seed );
+		worldData = new WorldData( GameAssets.Instance.worldName, GameAssets.Instance.seed );
 
 		loadDistance = viewDistance + 1;
 	}
@@ -139,8 +138,8 @@ public class World : MonoBehaviour {
 		activeChunks.Clear();
 
 		// Loop through all chunks currently within load distance of the player.
-		for ( int x = coord.x - loadDistance; x < coord.x + loadDistance + 1; x++ ) {
-			for ( int z = coord.z - loadDistance; z < coord.z + loadDistance + 1; z++ ) {
+		for ( int x = coord.GetCoord().x - loadDistance; x < coord.GetCoord().x + loadDistance + 1; x++ ) {
+			for ( int z = coord.GetCoord().y - loadDistance; z < coord.GetCoord().y + loadDistance + 1; z++ ) {
 				ChunkCoord thisChunkCoord = new ChunkCoord( x, z );
 
 				// If the current chunk is in the world...
@@ -151,7 +150,7 @@ public class World : MonoBehaviour {
 						worldData.LoadChunk( new Vector2Int( x, z ) );
 					}
 					//displays chunks in view
-					else if ( x >= coord.x - viewDistance && x < coord.x + viewDistance + 1 && z >= coord.z - viewDistance && z < coord.z + viewDistance + 1 ) {
+					else if ( x >= coord.GetCoord().x - viewDistance && x < coord.GetCoord().x + viewDistance + 1 && z >= coord.GetCoord().y - viewDistance && z < coord.GetCoord().y + viewDistance + 1 ) {
 						worldData.chunkMap[ x, z ].IsActive = true;
 						activeChunks.Add( thisChunkCoord );
 					} else {
@@ -169,8 +168,8 @@ public class World : MonoBehaviour {
 
 	private void UpdateChunks() {
 		chunksToUpdate[ 0 ].UpdateChunkData();
-		if ( !activeChunks.Contains( chunksToUpdate[ 0 ].chunkData.coord ) )
-			activeChunks.Add( chunksToUpdate[ 0 ].chunkData.coord );
+		if ( !activeChunks.Contains( chunksToUpdate[ 0 ].GetChunkData().coord ) )
+			activeChunks.Add( chunksToUpdate[ 0 ].GetChunkData().coord );
 		chunksToUpdate.RemoveAt( 0 );
 	}
 
@@ -195,8 +194,8 @@ public class World : MonoBehaviour {
 		float strongestWeight = 0f;
 		int strongestBiomeIndex = 0;
 
-		for ( int i = 0; i < worldData.biomes.Length; i++ ) {
-			float weight = Noise.Get2DPerlin( new Vector2( globalPos.x, globalPos.z ), worldData.biomes[ i ].nosieOffset, worldData.biomes[ i ].nosieScale );
+		for ( int i = 0; i < GameAssets.Instance.biomes.Length; i++ ) {
+			float weight = Noise.Get2DPerlin( new Vector2( globalPos.x, globalPos.z ), GameAssets.Instance.biomes[ i ].GetTerrainNoiseOffset(), GameAssets.Instance.biomes[ i ].GetTerrainNoiseScale() );
 
 			// Keep track of which weight is strongest.
 			if ( weight > strongestWeight ) {
@@ -205,7 +204,7 @@ public class World : MonoBehaviour {
 			}
 
 			// Get the height of the terrain (for the current biome) and multiply it by its weight.
-			float height = worldData.biomes[ i ].terrainHeight * Noise.Get2DPerlin( new Vector2( globalPos.x, globalPos.z ), 0, worldData.biomes[ i ].terrainScale ) * weight;
+			float height = GameAssets.Instance.biomes[ i ].GetTerrainHeight() * Noise.Get2DPerlin( new Vector2( globalPos.x, globalPos.z ), 0, GameAssets.Instance.biomes[ i ].GetTerrainScale() ) * weight;
 
 			// If the height value is greater 0 add it to the sum of heights.
 			if ( height > 0 ) {
@@ -215,7 +214,7 @@ public class World : MonoBehaviour {
 		}
 
 		// Set biome to the one with the strongest weight.
-		Biome biome = worldData.biomes[ strongestBiomeIndex ];
+		BiomeData biome = GameAssets.Instance.biomes[ strongestBiomeIndex ];
 
 		// Get the average of the heights.
 		sumOfHeights /= count;
@@ -227,9 +226,9 @@ public class World : MonoBehaviour {
 		byte voxelID;
 
 		if ( yPos == terrainHeight )
-			voxelID = biome.surfaceBlock;
+			voxelID = biome.GetSurfaceBlock();
 		else if ( yPos < terrainHeight && yPos > terrainHeight - 4 )
-			voxelID = biome.subSurfaceBlock;
+			voxelID = biome.GetSubSurfaceBlock();
 		else if ( yPos > terrainHeight )
 			return 0;
 		else
@@ -238,10 +237,10 @@ public class World : MonoBehaviour {
 		/* SECOND PASS */
 
 		if ( voxelID == 2 ) {
-			foreach ( DepositData deposit in biome.deposits ) {
-				if ( yPos > deposit.height.x && yPos < deposit.height.y )
-					if ( Noise.Get3DPerlin( globalPos, deposit.noiseOffset, deposit.noiseScale, deposit.noiseThreshold ) )
-						voxelID = deposit.blockID;
+			foreach ( DepositData deposit in biome.GetDeposits() ) {
+				if ( yPos > deposit.GetHeight().x && yPos < deposit.GetHeight().y )
+					if ( Noise.Get3DPerlin( globalPos, deposit.GetOffset(), deposit.GetScale(), deposit.GetThreshold() ) )
+						voxelID = deposit.GetDepositId();
 			}
 		}
 
@@ -272,14 +271,4 @@ public class VoxelMod {
 		position = _position;
 		id = _id;
 	}
-}
-
-[System.Serializable]
-public class GameAssetsData {
-	public ItemData[] items;
-	public Biome[] biomes;
-
-	public Material[] materials;
-	public int seed;
-	public string worldName;
 }

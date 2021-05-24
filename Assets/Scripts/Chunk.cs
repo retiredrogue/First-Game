@@ -8,7 +8,7 @@ public class Chunk {
 	private readonly MeshFilter meshFilter;
 	private readonly MeshRenderer meshRenderer;
 
-	public ChunkData chunkData;
+	private readonly ChunkData chunkData;
 
 	private int vertexIndex = 0;
 	private readonly List<Vector3> vertices = new List<Vector3>();
@@ -20,7 +20,7 @@ public class Chunk {
 	private readonly List<Color> colors = new List<Color>();
 	private readonly List<Vector3> normals = new List<Vector3>();
 
-	public Vector3 gPosition;
+	private Vector3 worldPosition;
 
 	private bool _isActive;
 
@@ -33,21 +33,23 @@ public class Chunk {
 		}
 	}
 
+	public ChunkData GetChunkData() => chunkData;
+
 	public Chunk( ChunkCoord _coord ) {
-		chunkData = World.Instance.worldData.RequestChunkData( new Vector2Int( _coord.x, _coord.z ), true );
+		chunkData = World.Instance.worldData.RequestChunkData( _coord.GetCoord(), true );
 
 		chunkData.coord = _coord;
-		gPosition = new Vector3( chunkData.GPosition.x, 0, chunkData.GPosition.y );
+		worldPosition = new Vector3( chunkData.WorldPosition.x, 0, chunkData.WorldPosition.y );
 
 		chunkObject = new GameObject();
 		meshFilter = chunkObject.AddComponent<MeshFilter>();
 		meshRenderer = chunkObject.AddComponent<MeshRenderer>();
 		meshCollider = chunkObject.AddComponent<MeshCollider>();
-		meshRenderer.materials = World.Instance.worldData.materials;
+		meshRenderer.materials = GameAssets.Instance.materials;
 
 		chunkObject.transform.SetParent( World.Instance.transform );
-		chunkObject.transform.position = gPosition;
-		chunkObject.name = ( "Chunk: " + chunkData.coord.x + ", " + chunkData.coord.z ).ToString();
+		chunkObject.transform.position = worldPosition;
+		chunkObject.name = ( "Chunk: " + _coord.GetCoord().x + ", " + _coord.GetCoord().y ).ToString();
 
 		chunkData.chunk = this;
 
@@ -60,8 +62,8 @@ public class Chunk {
 		for ( int x = 0; x < WorldData.chunkWidth; x++ ) {
 			for ( int y = 0; y < WorldData.chunkHeight; y++ ) {
 				for ( int z = 0; z < WorldData.chunkWidth; z++ ) {
-					VoxelData voxel = chunkData.voxelMap[ x, y, z ];
-					if ( World.Instance.worldData.items[ voxel.id ].blockTypeInfo.canWalkOn )
+					VoxelData voxel = chunkData.GetVoxelData( x, y, z );
+					if ( GameAssets.Instance.items[ voxel.id ].blockTypeInfo.GetWalkable() )
 						UpdateVoxelMeshData( voxel.locPosition );
 				}
 			}
@@ -85,31 +87,31 @@ public class Chunk {
 		int y = Mathf.FloorToInt( pos.y );
 		int z = Mathf.FloorToInt( pos.z );
 
-		VoxelData voxel = chunkData.voxelMap[ x, y, z ];
+		VoxelData voxel = chunkData.GetVoxelData( x, y, z );
 
 		for ( int i = 0; i < 6; i++ ) {
 			VoxelData neighbour = voxel.neighbours[ i ];
 
-			if ( neighbour != null && neighbour.Properties.RenderNeighborFaces ) {
+			if ( neighbour != null && neighbour.Properties.GetNeighborRendering() ) {
 				float lightLevel = neighbour.LightAsFloat;
 
 				int faceVertCount = 0;
 
-				for ( int j = 0; j < voxel.Properties.voxelStructure.faces[ i ].vertData.Length; j++ ) {
-					VertData vertData = voxel.Properties.voxelStructure.faces[ i ].vertData[ j ];
+				for ( int j = 0; j < voxel.Properties.GetVoxelStructure().faces[ i ].vertData.Length; j++ ) {
+					VertData vertData = voxel.Properties.GetVoxelStructure().faces[ i ].vertData[ j ];
 					vertices.Add( pos + vertData.vertex );
-					normals.Add( voxel.Properties.voxelStructure.faces[ i ].normal );
+					normals.Add( voxel.Properties.GetVoxelStructure().faces[ i ].normal );
 					colors.Add( new Color( 0, 0, 0, lightLevel ) );
-					AddTextures( voxel.Properties.GetVoxelFace( i ), voxel.Properties.voxelStructure.faces[ i ].vertData[ j ].uv );
+					AddTextures( voxel.Properties.GetVoxelFace( i ), voxel.Properties.GetVoxelStructure().faces[ i ].vertData[ j ].uv );
 					faceVertCount++;
 				}
 
-				if ( !voxel.Properties.RenderNeighborFaces ) {
-					for ( int j = 0; j < voxel.Properties.voxelStructure.faces[ i ].triangles.Length; j++ )
-						triangles.Add( vertexIndex + voxel.Properties.voxelStructure.faces[ i ].triangles[ j ] );
+				if ( !voxel.Properties.GetNeighborRendering() ) {
+					for ( int j = 0; j < voxel.Properties.GetVoxelStructure().faces[ i ].triangles.Length; j++ )
+						triangles.Add( vertexIndex + voxel.Properties.GetVoxelStructure().faces[ i ].triangles[ j ] );
 				} else {
-					for ( int j = 0; j < voxel.Properties.voxelStructure.faces[ i ].triangles.Length; j++ )
-						transparentTriangles.Add( vertexIndex + voxel.Properties.voxelStructure.faces[ i ].triangles[ j ] );
+					for ( int j = 0; j < voxel.Properties.GetVoxelStructure().faces[ i ].triangles.Length; j++ )
+						transparentTriangles.Add( vertexIndex + voxel.Properties.GetVoxelStructure().faces[ i ].triangles[ j ] );
 				}
 
 				vertexIndex += faceVertCount;
@@ -150,8 +152,8 @@ public class Chunk {
 }
 
 public class ChunkCoord {
-	public int x;
-	public int z;
+	private readonly int x;
+	private readonly int z;
 
 	public ChunkCoord() {
 		x = 0;
@@ -170,6 +172,8 @@ public class ChunkCoord {
 		x = xCheck / WorldData.chunkWidth;
 		z = zCheck / WorldData.chunkWidth;
 	}
+
+	public Vector2Int GetCoord() => new Vector2Int( x, z );
 
 	public bool CompareCoords( ChunkCoord other ) {
 		if ( other == null )

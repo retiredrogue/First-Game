@@ -2,28 +2,25 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Inventory : MonoBehaviour {
-	public UIItemSlot[] slots;
+public class Inventory {
+	private readonly List<ItemData> itemList;
 
-	public List<UIItemSlot> emptySlots = new List<UIItemSlot>();
+	public Inventory() {
+		itemList = new List<ItemData>();
 
-	private void Start() {
-		for ( int i = 0; i < slots.Length; i++ ) {
-			if ( i < World.Instance.gameAssetsData.items.Length ) {
-				ItemData item = World.Instance.gameAssetsData.items[ i ];
-				item.amount = Random.Range( 2, 65 );
-				new ItemSlot( slots[ i ], item );
-			} else
-				new ItemSlot( slots[ i ] );
-		}
+		AddItem( GameAssets.Instance.items[ 1 ] );
+		AddItem( GameAssets.Instance.items[ 2 ] );
+		AddItem( GameAssets.Instance.items[ 3 ] );
+		AddItem( GameAssets.Instance.items[ 4 ] );
+
+		Debug.Log( itemList.Count );
 	}
 
-	//private void Update() {
-	//	foreach ( UIItemSlot s in slots ) {
-	//		if ( !s.HasItem && !emptySlots.Contains( s ) )
-	//			emptySlots.Add( s );
-	//		if ( s.HasItem && emptySlots.Contains( s ) )
-	//			emptySlots.Remove( s );
-	//	}
-	//}
+	public void AddItem( ItemData item ) {
+		itemList.Add( item );
+	}
+
+	public List<ItemData> GetItemList() {
+		return itemList;
+	}
 }

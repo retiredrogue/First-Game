@@ -30,18 +30,11 @@ public class Player : MonoBehaviour {
 	private float mouseSensitivity;
 	private float xRotation = 0f;
 
-	public Inventory inventory;
-
-	public ToolBar toolBar;
-
 	public float reach = 8;
 
 	public GameObject blockHighLight;
 
 	private bool _inUI = false;
-
-	public GameObject inventoryWindow;
-	public GameObject cursorSlot;
 
 	public bool InUI {
 		get { return _inUI; }
@@ -51,20 +44,23 @@ public class Player : MonoBehaviour {
 			if ( _inUI ) {
 				Cursor.lockState = CursorLockMode.None;
 				Cursor.visible = true;
-				inventoryWindow.transform.localScale = Vector3.one;
-				cursorSlot.SetActive( true );
 			} else {
 				Cursor.lockState = CursorLockMode.Locked;
 				Cursor.visible = false;
-				inventoryWindow.transform.localScale = Vector3.zero;
-				cursorSlot.SetActive( false );
 			}
 		}
 	}
 
-	private void Start() {
-		inventoryWindow.transform.localScale = Vector3.zero;
+	private Inventory inventory;
+	[SerializeField] private UIInventory uIInventory;
 
+	// Start is called before the first frame update
+	private void Awake() {
+		inventory = new Inventory();
+		uIInventory.SetInventory( inventory );
+	}
+
+	private void Start() {
 		world = GameObject.Find( "World" ).GetComponent<World>();
 		controller = GetComponent<CharacterController>();
 		cam = Camera.main.transform;
@@ -179,26 +175,19 @@ public class Player : MonoBehaviour {
 
 	private void RemoveBlock( Vector3 voxelgPosition ) {
 		if ( World.Instance.worldData.CheckForVoxel( voxelgPosition ) ) {
-			ItemEntity newItemEntity = World.Instance.itemEntityPf;
-
-			newItemEntity.transform.position = voxelgPosition;
-			newItemEntity.structureData = World.Instance.itemEntityStructure[ 0 ];
-			newItemEntity.blockID = World.Instance.worldData.GetVoxelData( voxelgPosition ).id;
-
-			Instantiate( newItemEntity );
-
 			World.Instance.worldData.EditVoxel( voxelgPosition, 0/*air block*/ , Vector3.zero );
 		}
 	}
 
+	//REWORK
 	private void PlaceBlock( Vector3 highLightPosition ) {
 		if ( Physics.Raycast( cam.position, cam.forward * reach, out RaycastHit hit, reach, targetBlock ) ) {
-			if ( toolBar.slots[ toolBar.slotIndex ].HasItemInSlot ) {
-				Vector3 newVoxelPos = highLightPosition + hit.normal;
-				World.Instance.worldData.EditVoxel( newVoxelPos, toolBar.slots[ toolBar.slotIndex ].itemSlot.item.id, Vector3.zero );
-				toolBar.slots[ toolBar.slotIndex ].itemSlot.Take( 1 );
-				Debug.Log( playerOrientation );
-			}
+			//if ( toolBar.slots[ toolBar.slotIndex ].HasItemInSlot ) {
+			//	Vector3 newVoxelPos = highLightPosition + hit.normal;
+			//	World.Instance.worldData.EditVoxel( newVoxelPos, toolBar.slots[ toolBar.slotIndex ].itemSlot.item.id, Vector3.zero );
+			//	toolBar.slots[ toolBar.slotIndex ].itemSlot.Take( 1 );
+			//	Debug.Log( playerOrientation );
+			//}
 		}
 	}
 

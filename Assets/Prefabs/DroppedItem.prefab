@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 9215606793725873794}
   - component: {fileID: 6584190646400225945}
   m_Layer: 0
-  m_Name: itemEntity
+  m_Name: DroppedItem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -28,7 +28,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 380168304831957465}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 90, y: 58, z: 99}
+  m_LocalPosition: {x: 81, y: 57, z: 92}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}

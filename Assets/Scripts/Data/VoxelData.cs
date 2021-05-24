@@ -23,7 +23,7 @@ public class VoxelData {
 
 	public Vector3Int GPosition {
 		get {
-			return new Vector3Int( locPosition.x + chunkData.GPosition.x, locPosition.y, locPosition.z + chunkData.GPosition.y );
+			return new Vector3Int( locPosition.x + chunkData.WorldPosition.x, locPosition.y, locPosition.z + chunkData.WorldPosition.y );
 		}
 	}
 
@@ -35,7 +35,7 @@ public class VoxelData {
 	}
 
 	public BlockData Properties {
-		get { return World.Instance.worldData.items[ id ].blockTypeInfo; }
+		get { return GameAssets.Instance.items[ id ].blockTypeInfo; }
 	}
 
 	public byte Light {
@@ -76,7 +76,7 @@ public class VoxelData {
 
 	public byte CastLight {
 		get {
-			int lightLevel = _light - Properties.opacityValue - 1;
+			int lightLevel = _light - Properties.GetOpacity() - 1;
 			if ( lightLevel < 0 )
 				lightLevel = 0;
 			return ( byte )lightLevel;

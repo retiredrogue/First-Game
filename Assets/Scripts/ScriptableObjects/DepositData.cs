@@ -4,12 +4,22 @@ using UnityEngine;
 
 [CreateAssetMenu( fileName = "New Deposit", menuName = "ScriptableObjects/Deposit Data" )]
 public class DepositData : ScriptableObject {
-	public byte blockID;
+	[SerializeField] private byte depositTypeID;
 
 	[Tooltip( "X: Min, Y: Max" )]
-	public Vector2Int height;
+	[SerializeField] private Vector2Int height;
 
-	public float noiseScale;
-	public float noiseThreshold;
-	public float noiseOffset;
+	[SerializeField] private float noiseScale;
+	[SerializeField] private float noiseThreshold;
+	[SerializeField] private float noiseOffset;
+
+	public float GetScale() => noiseScale;
+
+	public float GetThreshold() => noiseThreshold;
+
+	public float GetOffset() => noiseOffset;
+
+	public byte GetDepositId() => depositTypeID;
+
+	public Vector2Int GetHeight() => height;
 }

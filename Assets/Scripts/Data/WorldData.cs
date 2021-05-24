@@ -11,10 +11,6 @@ public class WorldData {
 	public static int worldSizeInChunks = 10;
 	public static int terrainHeight = chunkHeight / 2;
 
-	public ItemData[] items;
-	public Biome[] biomes;
-	public Material[] materials;
-
 	public static int textureAtlasSizeInBlocks = 16;
 
 	public static int WorldSizeInVoxels {
@@ -48,8 +44,6 @@ public class WorldData {
 			seed = 1;// Random.Range( 1, 10000 );
 		else
 			seed = _seed;
-
-		GetAssets();
 	}
 
 	public WorldData( WorldData wD ) {
@@ -62,14 +56,6 @@ public class WorldData {
 			seed = Random.Range( 1, 10000 );
 		else
 			seed = wD.seed;
-
-		GetAssets();
-	}
-
-	public void GetAssets() {
-		items = World.Instance.gameAssetsData.items;
-		biomes = World.Instance.gameAssetsData.biomes;
-		materials = World.Instance.gameAssetsData.materials;
 	}
 
 	public void AddToModifiedChunkList( ChunkData chunk ) {
@@ -87,19 +73,19 @@ public class WorldData {
 
 	public bool IsVoxelInWorld( Vector3 pos ) => ( pos.x >= 0 && pos.x < WorldSizeInVoxels && pos.y >= 0 && pos.y < chunkHeight && pos.z >= 0 && pos.z < WorldSizeInVoxels );
 
-	public VoxelData GetVoxelData( Vector3 voxelgPosition ) {
-		if ( !IsVoxelInWorld( voxelgPosition ) )
+	public VoxelData GetVoxelData( Vector3 voxelWorldPosition ) {
+		if ( !IsVoxelInWorld( voxelWorldPosition ) )
 			return null;
 
-		ChunkData chunkData = RequestChunkData( GetChunkCoord( voxelgPosition ), false );
+		ChunkData chunkData = RequestChunkData( GetChunkCoord( voxelWorldPosition ), false );
 
 		if ( chunkData == null )
 			return null;
 
 		// voxel position in chunk via a remainder should be 0 - 15
-		Vector3Int voxel = VoxelPositionInChunk( voxelgPosition );
+		Vector3Int voxel = VoxelPositionInChunk( voxelWorldPosition );
 
-		return chunkData.voxelMap[ voxel.x, voxel.y, voxel.z ];
+		return chunkData.GetVoxelData( voxel );
 	}
 
 	public ChunkCoord GetChunkCoord( Vector3 chunkgPosition ) => GetChunkCoord( new Vector2( chunkgPosition.x, chunkgPosition.z ) );
@@ -110,7 +96,7 @@ public class WorldData {
 		return new ChunkCoord( x, z );
 	}
 
-	public ChunkData RequestChunkData( ChunkCoord coord, bool create ) => RequestChunkData( new Vector2Int( coord.x, coord.z ), create );
+	public ChunkData RequestChunkData( ChunkCoord coord, bool create ) => RequestChunkData( coord.GetCoord(), create );
 
 	public ChunkData RequestChunkData( Vector2Int coord, bool create ) {
 		ChunkData c;
@@ -127,7 +113,7 @@ public class WorldData {
 		return c;
 	}
 
-	public bool IsChunkInWorld( ChunkCoord coord ) => ( coord.x >= 0 && coord.x < worldSizeInChunks - 1 && coord.z >= 0 && coord.z < worldSizeInChunks - 1 );
+	public bool IsChunkInWorld( ChunkCoord coord ) => ( coord.GetCoord().x >= 0 && coord.GetCoord().x < worldSizeInChunks - 1 && coord.GetCoord().y >= 0 && coord.GetCoord().y < worldSizeInChunks - 1 );
 
 	public Vector3Int VoxelPositionInChunk( Vector3 voxelPosition ) => new Vector3Int( ( int )voxelPosition.x % chunkWidth, ( int )voxelPosition.y, ( int )voxelPosition.z % chunkWidth );
 
@@ -145,7 +131,7 @@ public class WorldData {
 
 	public bool CheckForVoxel( Vector3 voxelgPosition ) {
 		VoxelData voxel = GetVoxelData( voxelgPosition );
-		return ( voxel != null && items[ voxel.id ].blockTypeInfo.canWalkOn );
+		return ( voxel != null && GameAssets.Instance.items[ voxel.id ].blockTypeInfo.GetWalkable() );
 	}
 
 	public void EditVoxel( Vector3 voxelgPosition, byte newID, Vector3 rotation ) {
