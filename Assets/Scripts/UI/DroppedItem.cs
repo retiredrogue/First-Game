@@ -14,6 +14,16 @@ public class DroppedItem : MonoBehaviour {
 		return droppedItem;
 	}
 
+	public void SetItem( ItemData item ) {
+		this.item = item;
+	}
+
+	public ItemData GetItem() => item;
+
+	public void DestorySelf() => Destroy( gameObject );
+
+	//Rendering Dropped Item
+
 	private readonly float blockOffset = .375f;
 
 	public VoxelStructureData structureData;
@@ -33,8 +43,8 @@ public class DroppedItem : MonoBehaviour {
 	private void Start() {
 		transform.position += new Vector3( blockOffset, blockOffset, blockOffset );
 
-		if ( item.id == 3/*grass*/ )
-			item.id = 8;
+		if ( item.id == 4/*grass*/ )
+			item.id = 3;
 
 		meshFilter = GetComponent<MeshFilter>();
 		meshRenderer = GetComponent<MeshRenderer>();
@@ -47,10 +57,6 @@ public class DroppedItem : MonoBehaviour {
 		meshRenderer.material = GameAssets.Instance.materials[ 1 ];
 
 		MakeDroppedBlockMesh();
-	}
-
-	public void SetItem( ItemData item ) {
-		this.item = item;
 	}
 
 	private void MakeDroppedBlockMesh() {

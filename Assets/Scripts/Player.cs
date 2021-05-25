@@ -87,7 +87,7 @@ public class Player : MonoBehaviour {
 		if ( !InUI ) {
 			GetPlayerInputs();
 			CalculateVelocity();
-			PlayerView();
+			PlayerLook();
 
 			if ( world.isWorldLoaded )
 				BlockHighLightPosition();
@@ -142,6 +142,7 @@ public class Player : MonoBehaviour {
 			RemoveBlock( blockHighLight.transform.position );
 
 		if ( Input.GetMouseButtonDown( 1 ) && blockHighLight.activeSelf )
+
 			PlaceBlock( blockHighLight.transform.position );
 	}
 
@@ -173,9 +174,10 @@ public class Player : MonoBehaviour {
 		blockHighLight.gameObject.SetActive( false );
 	}
 
-	private void RemoveBlock( Vector3 voxelgPosition ) {
-		if ( World.Instance.worldData.CheckForVoxel( voxelgPosition ) ) {
-			World.Instance.worldData.EditVoxel( voxelgPosition, 0/*air block*/ , Vector3.zero );
+	private void RemoveBlock( Vector3 voxelWorldPosition ) {
+		if ( World.Instance.worldData.CheckForVoxel( voxelWorldPosition ) ) {
+			DroppedItem.SpawnDroppedItemToWorld( voxelWorldPosition, GameAssets.Instance.items[ World.Instance.worldData.GetVoxelData( voxelWorldPosition ).id ] );
+			World.Instance.worldData.EditVoxel( voxelWorldPosition, 0/*air block*/ , Vector3.zero );
 		}
 	}
 
@@ -197,12 +199,20 @@ public class Player : MonoBehaviour {
 		jumpVelocity.y = Mathf.Sqrt( 2 * Mathf.Abs( gravity ) * jumpHeight.y );
 	}
 
-	private void PlayerView() {
+	private void PlayerLook() {
 		Vector2 mouseInput = new Vector2( Input.GetAxis( "Mouse X" ), Input.GetAxis( "Mouse Y" ) );
 		mouseInput *= ( ( mouseSensitivity * 10 ) * Time.deltaTime );
 		xRotation -= mouseInput.y;
 		xRotation = Mathf.Clamp( xRotation, -90f, 90f );
 		cam.transform.localRotation = Quaternion.Euler( xRotation, 0f, 0f );
 		transform.Rotate( Vector3.up * mouseInput.x );
+	}
+
+	private void OnTriggerEnter( Collider other ) {
+		DroppedItem droppedItem = other.GetComponent<DroppedItem>();
+		if ( droppedItem != null ) {
+			inventory.AddItem( droppedItem.GetItem() );
+			droppedItem.DestorySelf();
+		}
 	}
 }
