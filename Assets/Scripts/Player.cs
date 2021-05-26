@@ -52,6 +52,7 @@ public class Player : MonoBehaviour {
 	}
 
 	private Inventory inventory;
+
 	[SerializeField] private UIInventory uIInventory;
 
 	// Start is called before the first frame update
@@ -85,12 +86,19 @@ public class Player : MonoBehaviour {
 			InUI = !InUI;
 		}
 		if ( !InUI ) {
-			GetPlayerInputs();
+			GetPlayerMovements();
 			CalculateVelocity();
 			PlayerLook();
 
 			if ( world.isWorldLoaded )
 				BlockHighLightPosition();
+
+			if ( Input.GetMouseButtonDown( 0 ) && blockHighLight.activeSelf )
+				RemoveBlock( blockHighLight.transform.position );
+
+			if ( Input.GetMouseButtonDown( 1 ) && blockHighLight.activeSelf )
+				//use item
+				PlaceBlock( blockHighLight.transform.position );
 
 			controller.Move( velocity * Time.deltaTime );
 			Cursor.lockState = CursorLockMode.Locked;
@@ -117,7 +125,7 @@ public class Player : MonoBehaviour {
 		velocity.y += gravity * Time.deltaTime;
 	}
 
-	private void GetPlayerInputs() {
+	private void GetPlayerMovements() {
 		if ( Input.GetKeyDown( KeyCode.Escape ) )
 			Application.Quit();
 
@@ -137,13 +145,6 @@ public class Player : MonoBehaviour {
 
 		if ( Input.GetKeyUp( KeyCode.Space ) )
 			OnJumpInputUp();
-
-		if ( Input.GetMouseButtonDown( 0 ) && blockHighLight.activeSelf )
-			RemoveBlock( blockHighLight.transform.position );
-
-		if ( Input.GetMouseButtonDown( 1 ) && blockHighLight.activeSelf )
-
-			PlaceBlock( blockHighLight.transform.position );
 	}
 
 	public void OnJumpInputUp() {
@@ -176,7 +177,7 @@ public class Player : MonoBehaviour {
 
 	private void RemoveBlock( Vector3 voxelWorldPosition ) {
 		if ( World.Instance.worldData.CheckForVoxel( voxelWorldPosition ) ) {
-			DroppedItem.SpawnDroppedItemToWorld( voxelWorldPosition, GameAssets.Instance.items[ World.Instance.worldData.GetVoxelData( voxelWorldPosition ).id ] );
+			DroppedItem.SpawnDroppedItemToWorld( voxelWorldPosition, GameAssets.Instance.items[ World.Instance.worldData.GetVoxelData( voxelWorldPosition ).id ], 1 );
 			World.Instance.worldData.EditVoxel( voxelWorldPosition, 0/*air block*/ , Vector3.zero );
 		}
 	}

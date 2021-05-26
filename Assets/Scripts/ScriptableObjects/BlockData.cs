@@ -2,25 +2,25 @@ using UnityEngine;
 
 [System.Serializable]
 public class BlockData {
-	[SerializeField] private bool canWalkOn, canPassThrough, isFluid, canRotate, canFall;
-	[SerializeField] private VoxelStructureData voxelStructure;
+	public bool canWalkOn, canPassThrough, isFluid, canRotate, canFall;
+	public VoxelStructureData voxelStructure;
 
 	[Range( 0, 15 ), Tooltip( "15 is industructable, 0 instant brake" )]
-	[SerializeField] private byte hardness;
+	public byte hardness;
 
 	[SerializeField] private bool RenderNeighborFaces => ( opacityValue < 15 );
 
 	[Range( 0, 15 ), Tooltip( "15 is solid, 0 clear like glass" )]
-	[SerializeField] private byte opacityValue;
+	public byte opacityValue;
 
 	[Header( "Texture Values" )]
-	[SerializeField] private int frontFaceTexture;
+	public int frontFaceTexture;
 
-	[SerializeField] private int topFaceTexture;
-	[SerializeField] private int rightFaceTexture;
-	[SerializeField] private int leftFaceTexture;
-	[SerializeField] private int bottomFaceTexture;
-	[SerializeField] private int backFaceTexture;
+	public int topFaceTexture;
+	public int rightFaceTexture;
+	public int leftFaceTexture;
+	public int bottomFaceTexture;
+	public int backFaceTexture;
 
 	public void RotateFaces( Vector3 otherFaceNormal ) {
 		Debug.Log( otherFaceNormal );

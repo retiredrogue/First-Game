@@ -5,11 +5,12 @@ using UnityEngine;
 public class DroppedItem : MonoBehaviour {
 	private ItemData item;
 
-	public static DroppedItem SpawnDroppedItemToWorld( Vector3 position, ItemData item ) {
+	public static DroppedItem SpawnDroppedItemToWorld( Vector3 position, ItemData item, int amount ) {
 		Transform transform = Instantiate( GameAssets.Instance.droppedItemPf, position, Quaternion.identity );
 
 		DroppedItem droppedItem = transform.GetComponent<DroppedItem>();
 		droppedItem.SetItem( item );
+		item.amount = amount;
 
 		return droppedItem;
 	}
@@ -21,8 +22,6 @@ public class DroppedItem : MonoBehaviour {
 	public ItemData GetItem() => item;
 
 	public void DestorySelf() => Destroy( gameObject );
-
-	//Rendering Dropped Item
 
 	private readonly float blockOffset = .375f;
 
@@ -42,9 +41,6 @@ public class DroppedItem : MonoBehaviour {
 
 	private void Start() {
 		transform.position += new Vector3( blockOffset, blockOffset, blockOffset );
-
-		if ( item.id == 4/*grass*/ )
-			item.id = 3;
 
 		meshFilter = GetComponent<MeshFilter>();
 		meshRenderer = GetComponent<MeshRenderer>();
@@ -114,52 +110,5 @@ public class DroppedItem : MonoBehaviour {
 		y += WorldData.NormalizedBlockTextureSize * uv.y;
 
 		uvs.Add( new Vector2( x, y ) );
-	}
-
-	//REWORK
-	private void OnTriggerEnter( Collider other ) {
-		if ( other.CompareTag( "Player" ) ) {
-			Player player = other.gameObject.GetComponent<Player>();
-
-			////tool bar check
-			//for ( int i = 0; i < player.toolBar.slots.Length; i++ ) {
-			//	UIItemSlot slot = player.toolBar.slots[ i ];
-			//	if ( slot.HasItemInSlot && slot.itemSlot.item.id == blockID &&
-			//			 slot.itemSlot.item.amount < slot.itemSlot.item.StackSize ) {
-			//		player.toolBar.slots[ i ].itemSlot.Add( 1 );
-
-			//		Destroy( gameObject );
-			//		return;
-			//	}
-			//}
-
-			////inventory check
-			//for ( int i = 0; i < player.inventory.slots.Length; i++ ) {
-			//	UIItemSlot slot = player.inventory.slots[ i ];
-			//	if ( slot.HasItemInSlot && slot.itemSlot.item.id == blockID &&
-			//			 slot.itemSlot.item.amount < slot.itemSlot.item.StackSize ) {
-			//		player.inventory.slots[ i ].itemSlot.Add( 1 );
-
-			//		Destroy( gameObject );
-			//		return;
-			//	}
-			//}
-
-			//// no previouns item found add to last empty slot
-			//if ( player.inventory.emptySlots.Count != 0 ) {
-			//	string lastEmptySlotName = player.inventory.emptySlots[ player.inventory.emptySlots.Count - 1 ].name;
-			//	Debug.Log( lastEmptySlotName );
-			//	for ( int i = 0; i < player.inventory.slots.Length; i++ ) {
-			//		if ( player.inventory.slots[ i ].name == lastEmptySlotName ) {
-			//			Debug.Log( "found slot" );
-			//			player.inventory.slots[ i ].itemSlot.Add( 1 );
-			//			Debug.Log( "added to slot" );
-			//		}
-			//	}
-
-			//	Destroy( gameObject );
-			//	return;
-			//}
-		}
 	}
 }

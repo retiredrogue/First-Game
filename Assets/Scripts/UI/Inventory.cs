@@ -1,23 +1,34 @@
 using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Inventory {
-	private readonly List<ItemData> itemList;
+
+	public event EventHandler OnItemListChanged;
+
+	private List<ItemData> itemList;
 
 	public Inventory() {
 		itemList = new List<ItemData>();
-
-		AddItem( GameAssets.Instance.items[ 1 ] );
-		AddItem( GameAssets.Instance.items[ 2 ] );
-		AddItem( GameAssets.Instance.items[ 3 ] );
-		AddItem( GameAssets.Instance.items[ 4 ] );
-
-		Debug.Log( itemList.Count );
 	}
 
 	public void AddItem( ItemData item ) {
-		itemList.Add( item );
+		if ( item.IsStackable() ) {
+			bool itemAlreadyInInventory = false;
+
+			foreach ( ItemData inventoryItem in itemList ) {
+				if ( inventoryItem.id == item.id ) {
+					inventoryItem.amount += item.amount;
+					itemAlreadyInInventory = true;
+				}
+			}
+			if ( !itemAlreadyInInventory )
+				itemList.Add( item );
+		} else
+			itemList.Add( item );
+
+		OnItemListChanged?.Invoke( this, EventArgs.Empty );
 	}
 
 	public List<ItemData> GetItemList() {

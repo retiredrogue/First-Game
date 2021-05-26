@@ -238,6 +238,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb4fd69ac21f4f34f81a0a20dcadfa53, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  slotHighLight: {fileID: 1317572108}
   itemSlotTemplatePf: {fileID: 3859246699222223558, guid: 5df34b946cdffee4a9933f33e80854cd, type: 3}
 --- !u!1 &560336981
 GameObject:

@@ -17,16 +17,16 @@ public class UIScaling : MonoBehaviour {
 
 		scaling = new Vector2( Screen.safeArea.width / Screen.currentResolution.width, Screen.safeArea.height / Screen.currentResolution.height );
 
-		SetUIElements();
+		SetUIElementsScale();
 	}
 
 	private void LateUpdate() {
 		if ( screenSize != Screen.safeArea.size ) {
-			SetUIElements();
+			SetUIElementsScale();
 		}
 	}
 
-	private void SetUIElements() {
+	private void SetUIElementsScale() {
 		toolBar.anchoredPosition = SetPosition( toolBarPositionPrecentage );
 		toolBar.localScale = SetScale();
 	}

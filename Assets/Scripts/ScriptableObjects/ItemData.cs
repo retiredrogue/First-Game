@@ -18,4 +18,6 @@ public class ItemData : ScriptableObject {
 	public BlockData blockTypeInfo;
 
 	public int StackSize { get { return maxStackSize; } }
+
+	public bool IsStackable() => ( maxStackSize > 0 ) ? true : false;
 }

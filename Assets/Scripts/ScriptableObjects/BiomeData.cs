@@ -4,35 +4,35 @@ using UnityEngine;
 public class BiomeData : ScriptableObject {
 
 	[Header( "Major Flora" )]
-	[SerializeField] private int nosieOffset;
+	public int nosieOffset;
 
-	[SerializeField] private float nosieScale;
+	public float nosieScale;
 
-	[SerializeField] private int terrainHeight;
-	[SerializeField] private float terrainScale;
+	public int terrainHeight;
+	public float terrainScale;
 
-	[SerializeField] private byte surfaceBlock;
-	[SerializeField] private byte subSurfaceBlock;
+	public byte surfaceBlock;
+	public byte subSurfaceBlock;
 
 	[Header( "Major Flora Structure" )]
-	[SerializeField] private int majorFloraIndex;
+	public int majorFloraIndex;
 
-	[SerializeField] private float majorFloraZoneScale;
-
-	[Range( 0.1f, 1f )]
-	[SerializeField] private float majorFloraZoneThreshold;
-
-	[SerializeField] private float majorFloraPlacementScale;
+	public float majorFloraZoneScale;
 
 	[Range( 0.1f, 1f )]
-	[SerializeField] private float majorFloraPlacementThreshold;
+	public float majorFloraZoneThreshold;
 
-	[SerializeField] private bool placeMajorFlora;
+	public float majorFloraPlacementScale;
+
+	[Range( 0.1f, 1f )]
+	public float majorFloraPlacementThreshold;
+
+	public bool placeMajorFlora;
 
 	[Tooltip( "X: Min, Y: Max" )]
-	[SerializeField] private Vector2Int height;
+	public Vector2Int height;
 
-	[SerializeField] private DepositData[] deposits;
+	public DepositData[] deposits;
 
 	public DepositData[] GetDeposits() => deposits;
 

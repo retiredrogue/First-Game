@@ -14,15 +14,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 4
   spriteIcon: {fileID: 5392753449730437660, guid: 72d9c2b36a03f1b4c8f983e33826e58b, type: 3}
-  amount: 32
-  maxStackSize: 0
+  amount: 0
+  maxStackSize: 64
   blockTypeInfo:
     canWalkOn: 1
     canPassThrough: 0
-    voxelStructure: {fileID: 11400000, guid: 0c4cc4bd30ab09b4e8106e31fc1926dd, type: 2}
     isFluid: 0
-    isRotatable: 0
-    doesFall: 0
+    canRotate: 0
+    canFall: 0
+    voxelStructure: {fileID: 11400000, guid: 0c4cc4bd30ab09b4e8106e31fc1926dd, type: 2}
     hardness: 2
     opacityValue: 15
     frontFaceTexture: 3
