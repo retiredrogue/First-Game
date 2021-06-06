@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public static class Noise {
+public static class noise2 {
 
 	public static float Get2DPerlin( Vector2 position, float offset, float scale ) {
 		position.x += ( offset + World.Instance.worldData.seed + 0.1f );

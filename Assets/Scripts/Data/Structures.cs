@@ -20,7 +20,7 @@ public static class Structures {
 
 	public static Queue<VoxelMod> MakeTree( Vector3 gPosition, int minStemHeight, int maxStemHeight ) {
 		Queue<VoxelMod> queue = new Queue<VoxelMod>();
-		int height = ( int )( maxStemHeight * Noise.Get2DPerlin( new Vector2( gPosition.x, gPosition.z ), 250f, 3f ) );
+		int height = ( int )( maxStemHeight * noise2.Get2DPerlin( new Vector2( gPosition.x, gPosition.z ), 250f, 3f ) );
 
 		if ( height < minStemHeight )
 			height = minStemHeight;
@@ -47,7 +47,7 @@ public static class Structures {
 	public static Queue<VoxelMod> MakeCacti( Vector3 gPosition, int minStemHeight, int maxStemHeight ) {
 		Queue<VoxelMod> queue = new Queue<VoxelMod>();
 
-		int height = ( int )( maxStemHeight * Noise.Get2DPerlin( new Vector2( gPosition.x, gPosition.z ), 23456f, 2f ) );
+		int height = ( int )( maxStemHeight * noise2.Get2DPerlin( new Vector2( gPosition.x, gPosition.z ), 23456f, 2f ) );
 
 		if ( height < minStemHeight )
 			height = minStemHeight;

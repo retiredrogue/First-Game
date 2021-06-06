@@ -185,12 +185,13 @@ public class Player : MonoBehaviour {
 	//REWORK
 	private void PlaceBlock( Vector3 highLightPosition ) {
 		if ( Physics.Raycast( cam.position, cam.forward * reach, out RaycastHit hit, reach, targetBlock ) ) {
-			//if ( toolBar.slots[ toolBar.slotIndex ].HasItemInSlot ) {
-			//	Vector3 newVoxelPos = highLightPosition + hit.normal;
-			//	World.Instance.worldData.EditVoxel( newVoxelPos, toolBar.slots[ toolBar.slotIndex ].itemSlot.item.id, Vector3.zero );
-			//	toolBar.slots[ toolBar.slotIndex ].itemSlot.Take( 1 );
-			//	Debug.Log( playerOrientation );
-			//}
+			if ( inventory.GetItemList().Count > 0 ) {
+				Vector3 newVoxelPos = highLightPosition + hit.normal;
+
+				ItemData item = inventory.GetItemList().ToArray()[ uIInventory.GetCurrentSlotIndex() ];
+				World.Instance.worldData.EditVoxel( newVoxelPos, item.id, Vector3.zero );
+				inventory.RemoveItem( item );
+			}
 		}
 	}
 

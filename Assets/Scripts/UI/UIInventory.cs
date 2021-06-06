@@ -8,6 +8,8 @@ public class UIInventory : MonoBehaviour {
 	public RectTransform slotHighLight;
 	private int slotIndex = 0;
 
+	public int GetCurrentSlotIndex() => slotIndex;
+
 	[SerializeField]
 	private Inventory inventory;
 
@@ -44,6 +46,7 @@ public class UIInventory : MonoBehaviour {
 			RectTransform itemSlotRectTransform = Instantiate( itemSlotTemplatePf, itemSlotContainer ).GetComponent<RectTransform>();
 
 			itemSlotRectTransform.gameObject.SetActive( true );
+
 			itemSlotRectTransform.anchoredPosition = new Vector2( x * ( itemSlotCellSize + itemSlotCellOffset ) + itemSlotCellOffset, -y * ( itemSlotCellSize + itemSlotCellOffset ) );
 
 			Image image = itemSlotRectTransform.Find( "Image" ).GetComponent<Image>();
