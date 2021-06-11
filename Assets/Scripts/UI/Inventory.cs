@@ -31,24 +31,6 @@ public class Inventory {
 		OnItemListChanged?.Invoke( this, EventArgs.Empty );
 	}
 
-	public void RemoveItem( ItemData item ) {
-		if ( item.IsStackable() ) {
-			ItemData itemInInventory = null;
-
-			foreach ( ItemData inventoryItem in itemList ) {
-				if ( inventoryItem.id == item.id ) {
-					inventoryItem.amount -= 1;
-					itemInInventory = inventoryItem;
-				}
-			}
-			if ( itemInInventory != null && itemInInventory.amount <= 0 )
-				itemList.Remove( itemInInventory );
-		} else
-			itemList.Remove( item );
-
-		OnItemListChanged?.Invoke( this, EventArgs.Empty );
-	}
-
 	public List<ItemData> GetItemList() {
 		return itemList;
 	}

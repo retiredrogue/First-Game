@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
 <<<<<<< HEAD:ProjectSettings/TimelineSettings.asset
+<<<<<<< HEAD:ProjectSettings/TimelineSettings.asset
   assetDefaultFramerate: 60
 =======
   planetRadius: 2.72
@@ -81,3 +82,6 @@ MonoBehaviour:
         minValue: 0.43
         weightMultipler: 0.9
 >>>>>>> master:Assets/Scene2Stuff/Settings/Shape.asset
+=======
+  planetRadius: 2.39
+>>>>>>> parent of 79e2c84 (add block placement and more world gen revamp):Assets/Scene2Stuff/Settings/Shape.asset
