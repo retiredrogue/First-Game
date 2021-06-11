@@ -195,7 +195,7 @@ public class World : MonoBehaviour {
 		int strongestBiomeIndex = 0;
 
 		for ( int i = 0; i < GameAssets.Instance.biomes.Length; i++ ) {
-			float weight = Noise.Get2DPerlin( new Vector2( globalPos.x, globalPos.z ), GameAssets.Instance.biomes[ i ].GetTerrainNoiseOffset(), GameAssets.Instance.biomes[ i ].GetTerrainNoiseScale() );
+			float weight = noise2.Get2DPerlin( new Vector2( globalPos.x, globalPos.z ), GameAssets.Instance.biomes[ i ].GetTerrainNoiseOffset(), GameAssets.Instance.biomes[ i ].GetTerrainNoiseScale() );
 
 			// Keep track of which weight is strongest.
 			if ( weight > strongestWeight ) {
@@ -204,7 +204,7 @@ public class World : MonoBehaviour {
 			}
 
 			// Get the height of the terrain (for the current biome) and multiply it by its weight.
-			float height = GameAssets.Instance.biomes[ i ].GetTerrainHeight() * Noise.Get2DPerlin( new Vector2( globalPos.x, globalPos.z ), 0, GameAssets.Instance.biomes[ i ].GetTerrainScale() ) * weight;
+			float height = GameAssets.Instance.biomes[ i ].GetTerrainHeight() * noise2.Get2DPerlin( new Vector2( globalPos.x, globalPos.z ), 0, GameAssets.Instance.biomes[ i ].GetTerrainScale() ) * weight;
 
 			// If the height value is greater 0 add it to the sum of heights.
 			if ( height > 0 ) {
@@ -239,7 +239,7 @@ public class World : MonoBehaviour {
 		if ( voxelID == 2 ) {
 			foreach ( DepositData deposit in biome.GetDeposits() ) {
 				if ( yPos > deposit.GetHeight().x && yPos < deposit.GetHeight().y )
-					if ( Noise.Get3DPerlin( globalPos, deposit.GetOffset(), deposit.GetScale(), deposit.GetThreshold() ) )
+					if ( noise2.Get3DPerlin( globalPos, deposit.GetOffset(), deposit.GetScale(), deposit.GetThreshold() ) )
 						voxelID = deposit.GetDepositId();
 			}
 		}
