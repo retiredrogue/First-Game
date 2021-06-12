@@ -6,7 +6,7 @@ public class ChunkData {
 	private int x;
 	private int z;
 
-	public Chunk chunk;
+	public Chunks chunk;
 
 	public ChunkCoord coord;
 
@@ -28,7 +28,7 @@ public class ChunkData {
 		}
 	}
 
-	public Chunk GetChunk() => chunk;
+	public Chunks GetChunk() => chunk;
 
 	public void PopulateVoxelMapData() {
 		for ( int x = 0; x < WorldData.chunkWidth; x++ ) {

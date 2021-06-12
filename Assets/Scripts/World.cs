@@ -24,8 +24,8 @@ public class World : MonoBehaviour {
 	public WorldData worldData;
 
 	private readonly List<ChunkCoord> activeChunks = new List<ChunkCoord>();
-	private readonly List<Chunk> chunksToUpdate = new List<Chunk>();
-	public Queue<Chunk> chunksToDraw = new Queue<Chunk>();
+	private readonly List<Chunks> chunksToUpdate = new List<Chunks>();
+	public Queue<Chunks> chunksToDraw = new Queue<Chunks>();
 
 	private bool applyingModifications = false;
 	private readonly Queue<Queue<VoxelMod>> modifications = new Queue<Queue<VoxelMod>>();
@@ -90,7 +90,7 @@ public class World : MonoBehaviour {
 			UpdateChunks();
 	}
 
-	public void AddChunkToUpdate( Chunk chunk ) {
+	public void AddChunkToUpdate( Chunks chunk ) {
 		AddChunkToUpdate( chunk, false );
 	}
 
@@ -104,7 +104,7 @@ public class World : MonoBehaviour {
 		SetGlobalLightValue();
 	}
 
-	public void AddChunkToUpdate( Chunk chunk, bool insert ) {
+	public void AddChunkToUpdate( Chunks chunk, bool insert ) {
 		if ( !chunksToUpdate.Contains( chunk ) ) {
 			if ( insert )
 				chunksToUpdate.Insert( 0, chunk );
@@ -146,7 +146,7 @@ public class World : MonoBehaviour {
 				if ( worldData.IsChunkInWorld( thisChunkCoord ) ) {
 					// Check if it active, if not, activate it.
 					if ( worldData.chunkMap[ x, z ] == null ) {
-						worldData.chunkMap[ x, z ] = new Chunk( thisChunkCoord );
+						worldData.chunkMap[ x, z ] = new Chunks( thisChunkCoord );
 						worldData.LoadChunk( new Vector2Int( x, z ) );
 					}
 					//displays chunks in view

@@ -27,7 +27,7 @@ public class WorldData {
 		get { return .0625f; }
 	}
 
-	public Chunk[,] chunkMap = new Chunk[ worldSizeInChunks, worldSizeInChunks ];
+	public Chunks[,] chunkMap = new Chunks[ worldSizeInChunks, worldSizeInChunks ];
 	public Dictionary<Vector2Int, ChunkData> chunks = new Dictionary<Vector2Int, ChunkData>();
 
 	public List<ChunkData> modifiedChunks = new List<ChunkData>();

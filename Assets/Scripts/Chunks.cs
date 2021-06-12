@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Chunk {
+public class Chunks {
 	private readonly GameObject chunkObject;
 	private readonly MeshCollider meshCollider;
 	private readonly MeshFilter meshFilter;
@@ -35,7 +35,7 @@ public class Chunk {
 
 	public ChunkData GetChunkData() => chunkData;
 
-	public Chunk( ChunkCoord _coord ) {
+	public Chunks( ChunkCoord _coord ) {
 		chunkData = World.Instance.worldData.RequestChunkData( _coord.GetCoord(), true );
 
 		chunkData.coord = _coord;
